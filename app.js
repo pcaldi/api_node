@@ -7,14 +7,15 @@ const app = express();
 // Criar o middleware para receber os dados  no corpo da requisição;
 app.use(express.json());
 
-// Incluir a conexão com o banco de dados
-require("./db/models");
+
 
 // Incluir as CONTROLLERS
-const router = require('./controllers/users');
+const users = require('./controllers/users');
+const situations = require('./controllers/situations');
 
 // Criar as rotas
-app.use("/", router);
+app.use("/", users);
+app.use("/", situations);
 
 // Iniciar o servidor na porta 8080, criar a função utilizando arrow function para retornar a mensagem de sucesso.
 const PORT = 8080;

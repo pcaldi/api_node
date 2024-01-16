@@ -3,10 +3,10 @@
 ### npm install
 
 - Rodar o projeto
-### node index.js
+### node app.js
 
 - Rodar o projeto utilizando nodemon
-### npx nodemon index.js
+### npx nodemon app.js
 
 
 # SEQUÊNCIA PARA CRIAR O PROJETO

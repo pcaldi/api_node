@@ -4,6 +4,9 @@ const express = require('express');
 //Chamar a função express
 const router = express.Router();
 
+// Incluir a conexão com o banco de dados
+const db = require("../db/models");
+
 // Criar a rota Listar, é a rota raiz
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/
 router.get("/", (req, res) => {
@@ -38,22 +41,30 @@ router.get("/users/:id", (req, res) => {
 {
   "name": "Paulo",
   "email": "paulo@email.com",
-  "subject": "Assunto",
-  "content": "Conteúdo"
+  "situationId": 1,
+
 }
 */
-router.post("/users", (req, res) => {
+router.post("/users", async (req, res) => {
   //receber os dados enviados no corpo da requisição
-  var { name, email, situationId } = req.body;
+  var data = req.body;
 
-  // Implementar os dados no banco de dados
-
-  // Retornar o objeto como resposta
-  return res.json({
-    name,
-    email,
-    situationId
+  // Salvar os dados no banco de dados
+  await db.Users.create(data).then((dataUser) => {
+    // Retornar o objeto como resposta
+    return res.json({
+      error: false,
+      message: "Usuário cadastrado com sucesso!",
+      dataUser
+    });
+  }).catch(() => {
+    // Retornar o objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: "Usuário não cadastrado.",
+    });
   });
+
 });
 
 // Criar a rota Editar
