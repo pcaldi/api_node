@@ -52,13 +52,13 @@
 - Sequelize-cli interface de linha de comando usada para criar modelos, configurações e arquivos de migração para banco de dados
 ### npm install --save-dev sequelize-cli
 
--Iniciar o Sequelize-cli e criar o arquivo config
+- Iniciar o Sequelize-cli e criar o arquivo config
 ### npx sequelize-cli init
 
--Manipular variáveis de ambiente
+- Manipular variáveis de ambiente
 ### npm install dotenv --save
 
--Criar a Models situação
+- Criar a Models situação
 ### npx sequelize-cli model:generate --name Situations --attributes nameSituation:string
 
 -Criar a Models usuários
