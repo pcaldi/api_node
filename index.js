@@ -4,37 +4,16 @@ const express = require('express');
 //Chamar a função express
 const app = express();
 
-// Criar a rota Listar, é a rota raiz
-// Endereço para acessar a api através de aplicação externa: http://localhost:8080/
-app.get("/", (req, res) => {
+// Criar o middleware para receber os dados  no corpo da requisição;
+app.use(express.json());
 
-  // Retornar texto como resposta.
-  res.send('Welcome!');
-});
+// Incluir as CONTROLLERS
+const router = require('./src/controllers/users');
 
-// Criar a rota Usuários
-// Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/1?sit=2
-app.get("/users/:id", (req, res) => {
+// Criar as rotas
+app.use("/", router);
 
-  // http://localhost:8080/users/1
-  const { id } = req.params;
-  // http://localhost:8080/users/1?sit=2
-  const { sit } = req.query;
-
-  // retornar como resposta um objeto
-  return res.json({
-    id,
-    name: "Paulo",
-    email: "paulo@gmail.com",
-    sit
-  })
-
-
-});
-
-
-// Iniciar o servidor na porta 8080, criar a função utilizando modelo Arrow function para retornar a mensagem de sucesso.
-
+// Iniciar o servidor na porta 8080, criar a função utilizando arrow function para retornar a mensagem de sucesso.
 const PORT = 8080;
 
 app.listen(PORT, () => {

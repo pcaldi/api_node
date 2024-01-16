@@ -6,7 +6,7 @@
 ### node index.js
 
 - Rodar o projeto utilizando nodemon
-### nodemon index.js
+### npx nodemon index.js
 
 
 # SEQUÊNCIA PARA CRIAR O PROJETO
