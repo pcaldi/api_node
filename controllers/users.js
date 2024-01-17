@@ -20,8 +20,11 @@ router.get("/", async (req, res) => {
     // Ordenar os registros pela coluna id na forma decrescente.
     order: [['id', 'DESC']],
 
+    // Buscar dados na tabela secundaria
     include: [{
-
+      model: db.Situations,
+      // Recuperar as seguintes colunas
+      attributes: ['nameSituation']
     }]
 
   });
