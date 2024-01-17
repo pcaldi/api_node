@@ -2,6 +2,16 @@
 - Instalar todas as dependências indicada pelo package.json
 ### npm install
 
+- Criar a base de dados "pcaldi" no MySQL
+- Alterar as credenciais do banco de dados no arquivo .env
+
+- Executar as migrations
+### npx sequelize-cli db:migrate
+
+- Executar as seeders
+### npx sequelize-cli db:seed:all
+
+
 - Rodar o projeto
 ### node app.js
 
@@ -66,3 +76,12 @@
 
 - Executar as migrations
 ### npx sequelize-cli db:migrate
+
+- Criar seeders situations
+### npx sequelize-cli seed:generate --name demo-situations
+
+- Criar seeders users
+### npx sequelize-cli seed:generate --name demo-users
+
+- Executar as seeders
+### npx sequelize-cli db:seed:all
