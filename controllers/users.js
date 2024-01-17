@@ -18,7 +18,11 @@ router.get("/", async (req, res) => {
     attributes: ['id', 'name', 'email', 'situationId'],
 
     // Ordenar os registros pela coluna id na forma decrescente.
-    order: [['id', 'DESC']]
+    order: [['id', 'DESC']],
+
+    include: [{
+
+    }]
 
   });
   // Acessa o if se encontrar o registo no banco de dados

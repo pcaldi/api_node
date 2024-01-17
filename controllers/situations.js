@@ -6,6 +6,41 @@ const router = express.Router();
 // Incluir a conexão com o banco de dados
 const db = require("../db/models");
 
+
+// Criar a rota Listar, é a rota raiz
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/situation
+router.get("/situations", async (req, res) => {
+
+  // Recuperar todos as situations do banco de dados
+  const situations = db.Situations.findAll({
+
+    // Indicar quais colunas recuperar
+    attributes: ['id', 'nameSituation'],
+
+    // Ordenar os registros pela coluna id na forma decrescente.
+    order: ['id', 'DESC']
+  });
+
+  // Acessa o if se encontrar o registo no banco de dados
+  if (situations) {
+    // Retornar o objeto como resposta
+    return res.json(
+      {
+        error: false,
+        situations
+      }
+    );
+  } else {
+    return res.status(400).json(
+      {
+        error: true,
+        message: "Error: Nenhuma situação encontrada!",
+      }
+    );
+  }
+});
+
+
 // Criar a rota Cadastro
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/situations
 /* A aplicação externa deve indicar que está enviando os dados em formato de objeto:
@@ -34,13 +69,9 @@ router.post("/situations", async (req, res) => {
         error: true,
         message: "Situação não cadastrada com sucesso!",
       }
-    )
+    );
   });
-
-
 });
-
-
 
 // Exportar a instrução que está dentro da constante router
 module.exports = router;
