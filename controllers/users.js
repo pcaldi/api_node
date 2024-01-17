@@ -9,10 +9,33 @@ const db = require("../db/models");
 
 // Criar a rota Listar, é a rota raiz
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
 
-  // Retornar texto como resposta.
-  res.send('Listar Usuários');
+  // Recuperar todos os usuários do banco de dados
+  const users = await db.Users.findAll({
+
+    // Indicar quais colunas recuperar
+    attributes: ['id', 'name', 'email', 'situationId'],
+
+    // Ordenar os registros pela coluna id na forma decrescente.
+    order: [['id', 'DESC']]
+
+  });
+  // Acessa o if se encontrar o registo no banco de dados
+  if (users) {
+    // Retornar o objeto como resposta
+    return res.json({
+      error: false,
+      users
+    });
+  } else {
+    // Retornar o objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: "Erro: Nenhum usuário não encontrado.",
+    });
+  }
+
 });
 
 // Criar a rota Usuários
