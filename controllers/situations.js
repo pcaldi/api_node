@@ -38,8 +38,6 @@ router.get("/situations", async (req, res) => {
       })
   }
 
-
-
   // Recuperar todos as situations do banco de dados
   const situations = await db.Situations.findAll({
 
@@ -71,6 +69,41 @@ router.get("/situations", async (req, res) => {
     );
   }
 });
+
+// Criar a rota Visualizar Situations
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/situations/1
+router.get("/situations/:id", async (req, res) => {
+
+  // http://localhost:8080/users/1
+  const { id } = req.params;
+
+  // Recuperar o registro no banco de dados
+  const situation = await db.Situations.findOne({
+
+    // Indicar qual colunas recuperar
+    attributes: ['id', 'nameSituation'],
+
+    // Acrescentar condição para indicar qual registro dever ser retornado do banco de dados
+    where: { id },
+  });
+
+  // Acessa o if se encontrar o registo no banco de dados
+  if (situation) {
+    // Retornar o objeto como resposta
+    return res.json({
+      error: false,
+      situation
+    })
+  } else {
+    // Retornar objeto como resposta
+    return res.json({
+      error: true,
+      message: "Error: Situação não encontrada."
+    })
+  }
+
+})
+
 
 
 // Criar a rota Cadastro
