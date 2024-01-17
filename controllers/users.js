@@ -70,30 +70,51 @@ router.get("/users", async (req, res) => {
     // Retornar o objeto como resposta
     return res.status(400).json({
       error: true,
-      message: "Erro: Nenhum usuário não encontrado.",
+      message: "Erro: Nenhum usuário encontrado.",
     });
   }
 
 });
 
 // Criar a rota Usuários
-// Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/1?sit=2
-router.get("/users/:id", (req, res) => {
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/1
+router.get("/users/:id", async (req, res) => {
 
   // http://localhost:8080/users/1
   const { id } = req.params;
 
-  // http://localhost:8080/users/1?sit=2
-  const { sit } = req.query;
+  // Recuperar o registro do banco de dados
+  const user = await db.Users.findOne({
+    // Indicar quais colunas recuperar
+    attributes: ['id', 'name', 'email', 'situationId', 'updatedAt', 'createdAt'],
 
-  // retornar como resposta um objeto
-  return res.json({
-    id,
-    name: "Paulo",
-    email: "paulo@gmail.com",
-    idade: 37,
-    sit
-  })
+    // Buscar dados na tabela secundária
+    include: [{
+      model: db.Situations,
+      // No sequelize colunas é indicado como "attributes", Logo quero recuperar as seguintes colunas
+      attributes: ['nameSituation']
+    }],
+
+
+    // Acrescentar condição para indicar qual registro dever ser retornado do banco de dados
+    where: { id }
+  });
+
+  // Acessa o if se encontrar o registo no banco de dados
+  if (user) {
+    // Retornar o objeto como resposta
+    return res.json({
+      error: false,
+      user
+    });
+  } else {
+    // Retornar o objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: "Erro: Nenhum usuário encontrado.",
+    });
+  }
+
 });
 
 // Criar a rota Cadastro
