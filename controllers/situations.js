@@ -12,13 +12,11 @@ const db = require("../db/models");
 router.get("/situations", async (req, res) => {
 
   // Recuperar todos as situations do banco de dados
-  const situations = db.Situations.findAll({
+  const situations = await db.Situations.findAll({
 
     // Indicar quais colunas recuperar
     attributes: ['id', 'nameSituation'],
 
-    // Ordenar os registros pela coluna id na forma decrescente.
-    order: ['id', 'DESC']
   });
 
   // Acessa o if se encontrar o registo no banco de dados
