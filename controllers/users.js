@@ -8,8 +8,34 @@ const router = express.Router();
 const db = require("../db/models");
 
 // Criar a rota Listar, é a rota raiz
-// Endereço para acessar a api através de aplicação externa: http://localhost:8080/
-router.get("/", async (req, res) => {
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/users?page=1
+router.get("/users", async (req, res) => {
+
+  // Receber o número da página, quando não é enviado o número da página é atribuído página 1.
+  const { page = 1 } = req.query;
+
+  // Limite de registro em cada página.
+  const limitPage = 40;
+
+  // Variável com o número da última página
+  var lastPage = 1;
+
+  // Contar a quantidade de registro no banco de dados
+  const countUser = await db.Users.count();
+
+  // Acessa o IF quando encontrar o registro no banco de dados
+  if (countUser !== 0) {
+
+    // Calcular a última página
+    lastPage = Math.ceil(countUser / limitPage);
+
+  } else {
+    // Retornar o objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: "Erro: Nenhum usuário não encontrado.",
+    });
+  }
 
   // Recuperar todos os usuários do banco de dados
   const users = await db.Users.findAll({
@@ -23,11 +49,16 @@ router.get("/", async (req, res) => {
     // Buscar dados na tabela secundária
     include: [{
       model: db.Situations,
-      // No sequelize colunas é indicado como "attributes", Recuperar as seguintes colunas
+      // No sequelize colunas é indicado como "attributes", Logo quero recuperar as seguintes colunas
       attributes: ['nameSituation']
-    }]
+    }],
+
+    // Calcular a partir de qual registro deve retornar e o limite de registros
+    offset: Number((page * limitPage) - limitPage),
+    limit: limitPage
 
   });
+
   // Acessa o if se encontrar o registo no banco de dados
   if (users) {
     // Retornar o objeto como resposta

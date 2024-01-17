@@ -8,14 +8,47 @@ const db = require("../db/models");
 
 
 // Criar a rota Listar, é a rota raiz
-// Endereço para acessar a api através de aplicação externa: http://localhost:8080/situation
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/situation?page=1
 router.get("/situations", async (req, res) => {
+
+  // Receber o número da página, quando não é enviado o número da página é atribuído página 1.
+  const { page = 1 } = req.query;
+
+  // Limitar o número de registros de cada página
+  const limit = 10;
+
+  // Variável com o número da última página
+  var lastPage = 1;
+
+  // Contar o número de registro no banco de dados
+  const countSituations = await db.Situations.count()
+
+  // Acessar o IF quando encontrar a registro no banco de dados
+  if (countSituations !== 0) {
+
+    // Calcular a última página
+    lastPage = Math.ceil(countSituations / limit);
+
+  } else {
+    // Retornar o objeto como resposta
+    return res.status(400).json(
+      {
+        error: true,
+        message: "Error: Nenhuma situação encontrada!",
+      })
+  }
+
+
 
   // Recuperar todos as situations do banco de dados
   const situations = await db.Situations.findAll({
 
     // Indicar quais colunas recuperar
     attributes: ['id', 'nameSituation'],
+
+    // Calcular a partir de qual registro deve retornar e o limite de registros
+    offset: Number((page * limit) - limit),
+    limit: limit,
 
   });
 
@@ -29,6 +62,7 @@ router.get("/situations", async (req, res) => {
       }
     );
   } else {
+    // Retornar o objeto como resposta
     return res.status(400).json(
       {
         error: true,
