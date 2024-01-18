@@ -80,6 +80,7 @@ router.get("/users", async (req, res) => {
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/1
 router.get("/users/:id", async (req, res) => {
 
+  // Receber o parâmetro enviado na URL
   // http://localhost:8080/users/1
   const { id } = req.params;
 
@@ -111,7 +112,7 @@ router.get("/users/:id", async (req, res) => {
     // Retornar o objeto como resposta
     return res.status(400).json({
       error: true,
-      message: "Erro: Nenhum usuário encontrado.",
+      message: "Erro: Usuário não encontrado.",
     });
   }
 
@@ -124,7 +125,6 @@ router.get("/users/:id", async (req, res) => {
   "name": "Paulo",
   "email": "paulo@email.com",
   "situationId": 1,
-
 }
 */
 router.post("/users", async (req, res) => {
@@ -150,25 +150,38 @@ router.post("/users", async (req, res) => {
 });
 
 // Criar a rota Editar
-// Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/1
-router.put("/users/:id", (req, res) => {
-
-  //Receber o parâmetro enviado na URL
-  const { id } = req.params;
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/
+// A aplicação externa deve indicar que está enviado os dados em formato de objeto Content-Type: application/json
+// Dados em formato de objeto
+/*{
+    "id": 1,
+    "name": "Paulo",
+    "email": "paulo@email.com",
+    "situationId": 1
+}
+*/
+router.put("/users/", async (req, res) => {
 
   //Receber os dados enviados no corpo da requisição
-  const { _id, name, email, situationId } = req.body;
+  const data = req.body;
 
-  // Implementar os regra para editar no banco de dados
+  // Editar no banco de dados
+  await db.Users.update(data, { where: { id: data.id } })
+    .then(() => {
+      // Retorno objeto como resposta
+      return res.json({
+        error: false,
+        message: 'Usuário editado com sucesso.'
+      });
+    }).catch(() => {
+      // Retorno objeto como resposta
+      return res.json({
+        error: true,
+        message: 'Usuário não editado com sucesso.'
+      })
+    })
 
-  // Retornar o objeto como resposta
-  return res.json({
-    _id,
-    id,
-    name,
-    email,
-    situationId
-  });
+
 });
 
 // Criar a rota Apagar
