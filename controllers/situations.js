@@ -117,24 +117,25 @@ router.post("/situations", async (req, res) => {
   var data = req.body;
 
   // Salvar no banco de dados
-  await db.Situations.create(data).then((dataSituation) => {
-    // Retornar o objeto como resposta
-    return res.json(
-      {
-        error: false,
-        message: "Situação cadastrada com sucesso!",
-        dataSituation
-      }
-    );
-  }).catch(() => {
-    // Retornar o objeto como resposta
-    return res.status(400).json(
-      {
-        error: true,
-        message: "Situação não cadastrada com sucesso!",
-      }
-    );
-  });
+  await db.Situations.create(data)
+    .then((dataSituation) => {
+      // Retornar o objeto como resposta
+      return res.json(
+        {
+          error: false,
+          message: "Situação cadastrada com sucesso!",
+          dataSituation
+        }
+      );
+    }).catch(() => {
+      // Retornar o objeto como resposta
+      return res.status(400).json(
+        {
+          error: true,
+          message: "Error: Situação não cadastrada com sucesso!",
+        }
+      );
+    });
 });
 
 // Rota de EDITAR registro no banco de dados
@@ -163,7 +164,7 @@ router.put("/situations/", async (req, res) => {
       // Retorno o objeto como resposta
       return res.json({
         error: true,
-        message: 'Situação não editada.'
+        message: 'Error: Situação não editada.'
       })
     })
 })

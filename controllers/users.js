@@ -143,7 +143,7 @@ router.post("/users", async (req, res) => {
     // Retornar o objeto como resposta
     return res.status(400).json({
       error: true,
-      message: "Usuário não cadastrado.",
+      message: "Error: Usuário não cadastrado.",
     });
   });
 
@@ -177,7 +177,7 @@ router.put("/users/", async (req, res) => {
       // Retorno objeto como resposta
       return res.json({
         error: true,
-        message: 'Usuário não editado com sucesso.'
+        message: 'Error: Usuário não editado.'
       })
     })
 
