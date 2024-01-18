@@ -97,13 +97,13 @@ router.get("/situations/:id", async (req, res) => {
     })
   } else {
     // Retornar objeto como resposta
-    return res.json({
+    return res.status(400).json({
       error: true,
       message: "Error: Situação não encontrada."
     })
   }
 
-})
+});
 
 // Criar a rota Cadastro
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/situations
@@ -162,12 +162,42 @@ router.put("/situations/", async (req, res) => {
     })
     .catch(() => {
       // Retorno o objeto como resposta
-      return res.json({
+      return res.status(400).json({
         error: true,
         message: 'Error: Situação não editada.'
       })
     })
-})
+});
+
+// Rota Apagar registro no banco de dados
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/situations/5
+router.delete("/situations/:id", async (req, res) => {
+
+  //Receber o parâmetro enviado na URL
+  const { id } = req.params;
+
+  // Apagar situação no banco de dados utilizando a MODELS Situations
+  await db.Situations.destroy({
+
+    // Acrescento WHERE na instrução SQL indicando qual registro excluir no banco de dados
+    where: { id }
+
+  }).then(() => {
+    // Retornar o objeto como resposta
+    return res.json({
+      error: false,
+      message: 'Apagado com sucesso.'
+    });
+  }).catch(() => {
+    // Retornar o objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: 'Error: Não apagado.'
+    })
+  })
+
+});
+
 
 // Exportar a instrução que está dentro da constante router
 module.exports = router;

@@ -175,7 +175,7 @@ router.put("/users/", async (req, res) => {
       });
     }).catch(() => {
       // Retorno objeto como resposta
-      return res.json({
+      return res.status(400).json({
         error: true,
         message: 'Error: Usuário não editado.'
       })
@@ -186,14 +186,30 @@ router.put("/users/", async (req, res) => {
 
 // Criar a rota Apagar
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/5
-
-router.delete("/users/:id", (req, res) => {
+router.delete("/users/:id", async (req, res) => {
 
   //Receber o parâmetro enviado na URL
   const { id } = req.params;
 
-  // Implementar os regra para apagar registro no banco de dados
+  // Apagar usuário no banco de dados utilizando a MODELS User
+  await db.Users.destroy({
 
+    // Acrescento WHERE na instrução SQL indicando qual registro excluir no banco de dados
+    where: { id }
+
+  }).then(() => {
+    // Retorno objeto como resposta
+    return res.json({
+      error: false,
+      message: 'Usuário apagado com sucesso.'
+    })
+  }).catch(() => {
+    // Retorno objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: 'Error: Usuário não apagado.'
+    })
+  })
   // Retornar o objeto como resposta
   return res.json({ id });
 });
