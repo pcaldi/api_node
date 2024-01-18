@@ -74,6 +74,7 @@ router.get("/situations", async (req, res) => {
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/situations/1
 router.get("/situations/:id", async (req, res) => {
 
+  // Receber o parâmetro enviado na URL
   // http://localhost:8080/users/1
   const { id } = req.params;
 
@@ -103,8 +104,6 @@ router.get("/situations/:id", async (req, res) => {
   }
 
 })
-
-
 
 // Criar a rota Cadastro
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/situations
@@ -137,6 +136,37 @@ router.post("/situations", async (req, res) => {
     );
   });
 });
+
+// Rota de EDITAR registro no banco de dados
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/situations/
+/* A aplicação externa deve indicar que está enviando os dados em formato de objeto:
+{
+  "id": 1,
+  "nameSituation: "Ativo",
+}
+*/
+router.put("/situations/", async (req, res) => {
+
+  // Receber os dados enviados no corpo da requisição
+  const data = req.body;
+
+  // Editar o registro no banco de dados
+  await db.Situations.update(data, { where: { id: data.id } })
+    .then(() => {
+      // Retornar o objeto como resposta
+      return res.json({
+        error: false,
+        message: 'Situação editada com sucesso.'
+      })
+    })
+    .catch(() => {
+      // Retorno o objeto como resposta
+      return res.json({
+        error: true,
+        message: 'Situação não editada.'
+      })
+    })
+})
 
 // Exportar a instrução que está dentro da constante router
 module.exports = router;
