@@ -92,7 +92,7 @@
 - Instalar módulo para criptografar a senha
 ### npm install --save bcryptjs
 
--
-### npx sequelize-cli db:migrate:undo --name nome-da-migration
+-Executar o down "rollback", Permite que seja desfeita a migration, permitindo a gestão das alterações do banco de dados, versionamento.
+### npx sequelize-cli db:migrate:undo --name (NOME-DA-MIGRATIONS)
 
 
