@@ -85,3 +85,14 @@
 
 - Executar as seeders
 ### npx sequelize-cli db:seed:all
+
+- Criar a migrations
+### npx sequelize-cli migration:generate --name alter-users-password
+
+- Instalar módulo para criptografar a senha
+### npm install --save bcryptjs
+
+-
+### npx sequelize-cli db:migrate:undo --name nome-da-migration
+
+

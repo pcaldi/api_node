@@ -7,6 +7,9 @@ const router = express.Router();
 // Incluir a conexão com o banco de dados
 const db = require("../db/models");
 
+// Criptografar a senha
+const bcrypt = require('bcrypt');
+
 // Criar a rota Listar, é a rota raiz
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users?page=1
 router.get("/users", async (req, res) => {
@@ -87,7 +90,7 @@ router.get("/users/:id", async (req, res) => {
   // Recuperar o registro do banco de dados
   const user = await db.Users.findOne({
     // Indicar quais colunas recuperar
-    attributes: ['id', 'name', 'email', 'situationId', 'updatedAt', 'createdAt'],
+    attributes: ['id', 'name', 'email', 'password', 'situationId', 'updatedAt', 'createdAt'],
 
     // Buscar dados na tabela secundária
     include: [{
@@ -130,6 +133,9 @@ router.get("/users/:id", async (req, res) => {
 router.post("/users", async (req, res) => {
   //receber os dados enviados no corpo da requisição
   var data = req.body;
+
+  // Criptografar a senha
+  data.password = await bcrypt.hash(String(data.password), 8);
 
   // Salvar os dados no banco de dados
   await db.Users.create(data).then((dataUser) => {
