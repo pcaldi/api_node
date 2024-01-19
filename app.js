@@ -12,10 +12,12 @@ app.use(express.json());
 // Incluir as CONTROLLERS
 const users = require('./controllers/users');
 const situations = require('./controllers/situations');
+const login = require('./controllers/login');
 
 // Criar as rotas
 app.use("/", users);
 app.use("/", situations);
+app.use("/", login);
 
 // Iniciar o servidor na porta 8080, criar a função utilizando arrow function para retornar a mensagem de sucesso.
 const PORT = 8080;
