@@ -3,6 +3,8 @@
 const express = require('express');
 //Chamar a função express
 const router = express.Router();
+// Validar formulários
+const yup = require('yup');
 // Incluir a conexão com o banco de dados
 const db = require("../db/models");
 // Arquivo para validar o token
@@ -118,6 +120,22 @@ router.post("/situations", eAdmin, async (req, res) => {
   //receber os dados enviados no corpo da requisição
   var data = req.body;
 
+  // Validar os compos utilizando YUP
+  const schema = yup.object().shape({
+    nameSituation: yup.string().required('Error: Necessário preencher o campo.'),
+  });
+
+  // Verifico se todos campos passaram pela validação
+  try {
+    await schema.validate(data);
+  } catch (error) {
+    //Retorno objeto como resposta
+    return res.status(401).json({
+      error: true,
+      message: error.errors
+    })
+  }
+
   // Salvar no banco de dados
   await db.Situations.create(data)
     .then((dataSituation) => {
@@ -153,6 +171,21 @@ router.put("/situations/", eAdmin, async (req, res) => {
   // Receber os dados enviados no corpo da requisição
   const data = req.body;
 
+  // Validar os campos com YUP
+  const schema = yup.object().shape({
+    nameSituation: yup.string().required('Necessário preencher o campo.'),
+  });
+
+  // Verifico se o campo passou pela validação
+  try {
+    await schema.validate(data)
+  } catch (error) {
+    // Retorno objeto como resposta
+    return res.status(401).json({
+      error: true,
+      message: error.errors
+    })
+  }
   // Editar o registro no banco de dados
   await db.Situations.update(data, { where: { id: data.id } })
     .then(() => {

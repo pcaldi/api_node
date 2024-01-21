@@ -4,12 +4,14 @@ const express = require('express');
 //Chamar a função express
 const router = express.Router();
 
-// Incluir a conexão com o banco de dados
-const db = require("../db/models");
-
 // Criptografar a senha
 const bcrypt = require('bcrypt');
 
+// Validar Formulários
+const yup = require('yup');
+
+// Incluir a conexão com o banco de dados
+const db = require("../db/models");
 // Arquivo para validar token
 const { eAdmin } = require('../services/authService');
 
@@ -141,6 +143,28 @@ router.post("/users", eAdmin, async (req, res) => {
   //receber os dados enviados no corpo da requisição
   var data = req.body;
 
+  // Validar os campos utilizando YUP
+  const schema = yup.object().shape({
+    situationId: yup.number()
+      .required('Error: Necessário preencher o campo situação!').max(4, 'Número máximo de situações.'),
+    password: yup.string()
+      .required('Error: Necessário preencher o campo senha!').min(6, 'A senha deve ter no mínimo 6 caracteres'),
+    email: yup.string().required('Error: Necessário preencher o campo e-mail!')
+      .email('Error: Necessário preencher com e-mail válido.!'),
+    name: yup.string().required('Error: Necessário preencher o campo nome!')
+  });
+
+  // Verifico se todos os campos passaram pela validação
+  try {
+    await schema.validate(data);
+  } catch (error) {
+    // Retorno objeto como resposta
+    return res.status(401).json({
+      error: true,
+      message: error.errors
+    })
+  }
+
   // Criptografar a senha
   data.password = await bcrypt.hash(String(data.password), 8);
 
@@ -177,6 +201,26 @@ router.put("/users/", eAdmin, async (req, res) => {
 
   //Receber os dados enviados no corpo da requisição
   const data = req.body;
+
+  // Validar os campos utilizando YUP
+  const schema = yup.object().shape({
+    situationId: yup.number()
+      .required('Error: Necessário preencher o campo situação!').max(4, 'Número máximo de situações.'),
+    email: yup.string().email('Error: Necessário preencher com e-mail válido.').required('Error: Necessário preencher com e-mail.'),
+    name: yup.string().required('Error: Necessário preencher o campo nome.')
+
+  });
+
+  //Verificar se todos os campos passaram pela validação
+  try {
+    await schema.validate(data);
+  } catch (error) {
+    // Retornar objeto como resposta
+    return res.status(401).json({
+      error: true,
+      message: error.errors
+    })
+  }
 
   // Editar no banco de dados
   await db.Users.update(data, { where: { id: data.id } })

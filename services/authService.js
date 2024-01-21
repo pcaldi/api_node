@@ -21,7 +21,7 @@ module.exports = {
       //Retornar um objeto como resposta
       return res.status(401).json({
         error: true,
-        message: 'Erro: Necessário realizar login para acessar essa página.',
+        message: 'Erro: ⚠️ Necessário realizar login para acessar essa página.',
       });
     }
 
@@ -55,7 +55,7 @@ module.exports = {
       // Retornar objeto como resposta
       return res.status(401).json({
         error: true,
-        message: 'Erro: Necessário realizar login para acessar essa página.'
+        message: 'Erro: ⚠️ Necessário realizar login para acessar essa página.'
       })
     }
   }
