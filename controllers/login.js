@@ -11,6 +11,8 @@ const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 // Incluir arquivo com variáveis de ambiente
 require('dotenv').config()
+//Validar formulários
+const yup = require('yup');
 
 
 
@@ -21,6 +23,23 @@ router.post("/login", async (req, res) => {
   // Receber os dados enviados no corpo da requisição
   var data = req.body;
   //console.log(data);
+
+  // Validar os campos utilizando YUP
+  const schema = yup.object().shape({
+    password: yup.string().required('Necessário preenchimento do campo senha.').min(6, 'A senha deve ter no mínimo 6 caracteres!'),
+    email: yup.string().required('Necessário preenchimento do campo e-mail.').email('Informe um e-mail válido.')
+  });
+
+  try {
+    await schema.validate(data);
+  } catch (error) {
+    //Retorno objeto como resposta
+    return res.status(401).json({
+      error: true,
+      message: error.errors
+    })
+  }
+
 
   // Recupera o registro no banco de dados
   const user = await db.Users.findOne({
@@ -55,7 +74,7 @@ router.post("/login", async (req, res) => {
   // Retorna objeto como resposta
   return res.json({
     error: false,
-    message: '🚀 Login realizado com sucesso!',
+    message: '✅ Login realizado com sucesso!',
     user: {
       token
     }
