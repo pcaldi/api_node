@@ -151,4 +151,7 @@ npx sequelize-cli db:migrate:undo --name (NOME-DA-MIGRATIONS)
 npm install --save jsonwebtoken
 ```
 
-
+### Validar formulário
+```
+npm install --save yup
+```
