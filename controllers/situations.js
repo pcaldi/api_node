@@ -5,11 +5,13 @@ const express = require('express');
 const router = express.Router();
 // Incluir a conexão com o banco de dados
 const db = require("../db/models");
+// Arquivo para validar o token
+const { eAdmin } = require("../services/authService");
 
 
 // Criar a rota Listar, é a rota raiz
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/situation?page=1
-router.get("/situations", async (req, res) => {
+router.get("/situations", eAdmin, async (req, res) => {
 
   // Receber o número da página, quando não é enviado o número da página é atribuído página 1.
   const { page = 1 } = req.query;
@@ -72,7 +74,7 @@ router.get("/situations", async (req, res) => {
 
 // Criar a rota Visualizar Situations
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/situations/1
-router.get("/situations/:id", async (req, res) => {
+router.get("/situations/:id", eAdmin, async (req, res) => {
 
   // Receber o parâmetro enviado na URL
   // http://localhost:8080/users/1
@@ -112,7 +114,7 @@ router.get("/situations/:id", async (req, res) => {
   "nameSituation: "Ativo",
 }
 */
-router.post("/situations", async (req, res) => {
+router.post("/situations", eAdmin, async (req, res) => {
   //receber os dados enviados no corpo da requisição
   var data = req.body;
 
@@ -146,7 +148,7 @@ router.post("/situations", async (req, res) => {
   "nameSituation: "Ativo",
 }
 */
-router.put("/situations/", async (req, res) => {
+router.put("/situations/", eAdmin, async (req, res) => {
 
   // Receber os dados enviados no corpo da requisição
   const data = req.body;
@@ -171,7 +173,7 @@ router.put("/situations/", async (req, res) => {
 
 // Rota Apagar registro no banco de dados
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/situations/5
-router.delete("/situations/:id", async (req, res) => {
+router.delete("/situations/:id", eAdmin, async (req, res) => {
 
   //Receber o parâmetro enviado na URL
   const { id } = req.params;

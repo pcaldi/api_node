@@ -10,15 +10,22 @@ const db = require("../db/models");
 // Criptografar a senha
 const bcrypt = require('bcrypt');
 
+// Arquivo para validar token
+const { eAdmin } = require('../services/authService');
+
 // Criar a rota Listar, é a rota raiz
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users?page=1
-router.get("/users", async (req, res) => {
+router.get("/users", eAdmin, async (req, res) => {
 
   // Receber o número da página, quando não é enviado o número da página é atribuído página 1.
   const { page = 1 } = req.query;
 
   // Limite de registro em cada página.
   const limitPage = 40;
+
+  // Recuperar os valores que estavam no token, tratado em authService.js
+  // console.log(req.userId)
+  // console.log(req.userName)
 
   // Variável com o número da última página
   var lastPage = 1;
@@ -81,7 +88,7 @@ router.get("/users", async (req, res) => {
 
 // Criar a rota Usuários
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/1
-router.get("/users/:id", async (req, res) => {
+router.get("/users/:id", eAdmin, async (req, res) => {
 
   // Receber o parâmetro enviado na URL
   // http://localhost:8080/users/1
@@ -130,7 +137,7 @@ router.get("/users/:id", async (req, res) => {
   "situationId": 1,
 }
 */
-router.post("/users", async (req, res) => {
+router.post("/users", eAdmin, async (req, res) => {
   //receber os dados enviados no corpo da requisição
   var data = req.body;
 
@@ -166,7 +173,7 @@ router.post("/users", async (req, res) => {
     "situationId": 1
 }
 */
-router.put("/users/", async (req, res) => {
+router.put("/users/", eAdmin, async (req, res) => {
 
   //Receber os dados enviados no corpo da requisição
   const data = req.body;
@@ -192,7 +199,7 @@ router.put("/users/", async (req, res) => {
 
 // Criar a rota Apagar
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/5
-router.delete("/users/:id", async (req, res) => {
+router.delete("/users/:id", eAdmin, async (req, res) => {
 
   //Receber o parâmetro enviado na URL
   const { id } = req.params;
