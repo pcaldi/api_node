@@ -48,9 +48,9 @@ router.post("/login", async (req, res) => {
     });
   }
   // Gerar o token de autenticação
-  const token = JWT.sign({ id: user.id }, process.env.SECRET_KEY, {
+  const token = JWT.sign({ id: user.id, /* name: user.name  */ }, process.env.SECRET_KEY, {
     expiresIn: 600 // 10 minutes
-  })
+  });
 
   // Retorna objeto como resposta
   return res.json({
@@ -61,7 +61,7 @@ router.post("/login", async (req, res) => {
     }
   });
 
-})
+});
 
 
 // Exportar a instrução que está dentro da constante router
