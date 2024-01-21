@@ -1,4 +1,4 @@
-# COMO RODAR O PROJETO BAIXADO
+# 🎡 RODAR O PROJETO BAIXADO
 ---
 ### Instalar todas as dependências indicada pelo package.json
 ```
@@ -30,7 +30,7 @@ node app.js
 npx nodemon app.js
  ```
 ---
-# SEQUÊNCIA PARA CRIAR O PROJETO
+# ✴️ SEQUÊNCIA PARA CRIAR O PROJETO
 ### Criar o arquivo package
 ```
 npm init
@@ -144,6 +144,11 @@ npm install --save bcryptjs
 ### Executar o down "rollback", Permite que seja desfeita a migration, permitindo a gestão das alterações do banco de dados, versionamento.
 ```
 npx sequelize-cli db:migrate:undo --name (NOME-DA-MIGRATIONS)
+```
+### Instalar a dependência JWT
+
+```
+npm install --save jsonwebtoken
 ```
 
 
