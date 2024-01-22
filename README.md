@@ -145,20 +145,25 @@ npm install --save bcryptjs
 ```
 npx sequelize-cli db:migrate:undo --name (NOME-DA-MIGRATIONS)
 ```
-### Instalar a dependência JWT
 
+### Instalar a dependência JWT
 ```
 npm install --save jsonwebtoken
 ```
+
 ### Validar formulário
 ```
 npm install --save yup
 ```
+
 ### Permitir requisição externa
 ```
 npm install cors
 ```
+
 ### Criar a migrations alterar a tabela users e acrescentar a coluna image
 ```
 npx sequelize-cli migration:generate --name alter-users-image
 ```
+### Multer é um middleware node.js para manipulação multipart/form-data, usado para o upload de arquivos
+npm install --save multer
