@@ -3,9 +3,25 @@
 const express = require('express');
 //Chamar a função express
 const app = express();
+// Importar biblioteca para permitir conexão externa
+const cors = require('cors');
 
 // Criar o middleware para receber os dados  no corpo da requisição;
 app.use(express.json());
+
+// Criar o middleware para permitir conexão externa
+app.use((req, res, next) => {
+  // Qualquer endereço pode fazer a requisição "*"
+  res.header("Access-Control-Allow-Origin", "*");
+  // Tipos de métodos que a API aceita
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  // Permitir o envio de dados para API
+  res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  // Executar o cors
+  app.use(cors());
+  // Quando não houver erro deve continuar o processamento
+  next();
+});
 
 
 

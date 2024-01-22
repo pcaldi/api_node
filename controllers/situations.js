@@ -137,7 +137,6 @@ router.post("/situations", eAdmin, async (req, res) => {
   }
 
 
-
   // Salvar no banco de dados
   await db.Situations.create(data)
     .then((dataSituation) => {

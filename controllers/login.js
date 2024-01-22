@@ -14,8 +14,6 @@ require('dotenv').config()
 //Validar formulários
 const yup = require('yup');
 
-
-
 // Criar a rota Login
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/login/
 router.post("/login", async (req, res) => {
