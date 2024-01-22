@@ -289,8 +289,23 @@ router.put("/users/", eAdmin, async (req, res) => {
       })
     })
 
-
 });
+
+// Criar a rota editar imagem e receber o parâmetro id enviado na URL
+// Endereço para acessar através da aplicação externa http://localhost:8080/user-image/1
+
+router.put("/users-image/:id", async (req, res) => {
+
+  // Receber o id enviado no URL
+  const { id } = req.params;
+  console.log(id);
+
+  // Retorno objeto como resposta
+  return res.json({
+    error: false,
+    message: 'Imagem editada com sucesso.'
+  });
+})
 
 // Criar a rota Apagar
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/5

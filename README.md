@@ -150,7 +150,6 @@ npx sequelize-cli db:migrate:undo --name (NOME-DA-MIGRATIONS)
 ```
 npm install --save jsonwebtoken
 ```
-
 ### Validar formulário
 ```
 npm install --save yup
@@ -158,4 +157,8 @@ npm install --save yup
 ### Permitir requisição externa
 ```
 npm install cors
+```
+### Criar a migrations alterar a tabela users e acrescentar a coluna image
+```
+npx sequelize-cli migration:generate --name alter-users-image
 ```
