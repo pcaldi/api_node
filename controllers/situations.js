@@ -133,8 +133,10 @@ router.post("/situations", eAdmin, async (req, res) => {
     return res.status(401).json({
       error: true,
       message: error.errors
-    })
+    });
   }
+
+
 
   // Salvar no banco de dados
   await db.Situations.create(data)

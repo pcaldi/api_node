@@ -10,6 +10,9 @@ const bcrypt = require('bcrypt');
 // Validar Formulários
 const yup = require('yup');
 
+//Operador Sequelize
+const { Op } = require('sequelize');
+
 // Incluir a conexão com o banco de dados
 const db = require("../db/models");
 // Arquivo para validar token
@@ -162,6 +165,27 @@ router.post("/users", eAdmin, async (req, res) => {
     return res.status(401).json({
       error: true,
       message: error.errors
+    });
+  }
+  // Recuperar o registro do banco de dados
+  const user = await db.Users.findOne({
+
+    // Indicar quais colunas recuperar
+    attributes: ['id'],
+
+    // Acrescentando condição para indicar qual registro deve ser retornado do banco de dados
+    where: {
+      email: data.email,
+    }
+  });
+  //console.log(user);
+
+  // Acessa o IF se encontrar o registro no banco de dados
+  if (user) {
+    // Retorno objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: 'Error: E-mail já cadastrado!'
     })
   }
 
@@ -219,8 +243,35 @@ router.put("/users/", eAdmin, async (req, res) => {
     return res.status(401).json({
       error: true,
       message: error.errors
+    });
+  }
+
+  // Recuperar o registro no banco de dados
+  const user = await db.Users.findOne({
+
+    //Indicar a coluna para recuperar
+    attributes: ['id'],
+
+    // Acrescentar condição para indicar qual registro deve ser retornado do banco de dados
+    where: {
+      email: data.email,
+      id: {
+        // Operador de negação para ignorar o registro do usuário que está sendo editado
+        [Op.ne]: Number(data.id)
+      }
+    }
+
+  });
+
+  // Acessa o IF se encontrar o registo no bando de dados
+  if (user) {
+    // Retorna objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: 'Error: E-mail já cadastrado!'
     })
   }
+
 
   // Editar no banco de dados
   await db.Users.update(data, { where: { id: data.id } })

@@ -13,7 +13,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        /* unique: true, */ //Retirar o comentário
       },
       situationId: {
         type: Sequelize.INTEGER,
