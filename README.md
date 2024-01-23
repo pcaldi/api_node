@@ -166,4 +166,6 @@ npm install cors
 npx sequelize-cli migration:generate --name alter-users-image
 ```
 ### Multer é um middleware node.js para manipulação multipart/form-data, usado para o upload de arquivos
+```
 npm install --save multer
+```
