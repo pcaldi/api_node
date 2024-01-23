@@ -18,6 +18,10 @@ const db = require("../db/models");
 // Arquivo para validar token
 const { eAdmin } = require('../services/authService');
 
+// Arquivo com a função de upload
+const upload = require('../services/uploadImgUserService');
+
+
 // Criar a rota Listar, é a rota raiz
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users?page=1
 router.get("/users", eAdmin, async (req, res) => {
@@ -102,7 +106,7 @@ router.get("/users/:id", eAdmin, async (req, res) => {
   // Recuperar o registro do banco de dados
   const user = await db.Users.findOne({
     // Indicar quais colunas recuperar
-    attributes: ['id', 'name', 'email', 'password', 'situationId', 'updatedAt', 'createdAt'],
+    attributes: ['id', 'name', 'email', 'image', 'situationId', 'updatedAt', 'createdAt'],
 
     // Buscar dados na tabela secundária
     include: [{
@@ -294,18 +298,39 @@ router.put("/users/", eAdmin, async (req, res) => {
 // Criar a rota editar imagem e receber o parâmetro id enviado na URL
 // Endereço para acessar através da aplicação externa http://localhost:8080/user-image/1
 
-router.put("/users-image/:id", async (req, res) => {
+router.put("/users-image/:id", upload.single('image'), async (req, res) => {
 
   // Receber o id enviado no URL
   const { id } = req.params;
-  console.log(id);
+  //console.log(id);
 
-  // Retorno objeto como resposta
-  return res.json({
-    error: false,
-    message: 'Imagem editada com sucesso.'
-  });
-})
+  // Acessa o IF quando a extensão da imagem é inválida
+  //console.log(req.file)
+  if (!req.file) {
+    // Retorno objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: 'Erro: Selecione uma imagem válida JPEG ou PNG!'
+    });
+  }
+  // Editar no banco de dados
+  db.Users.update(
+    { image: req.file.filename },
+    { where: { id } })
+    .then(() => {
+      return res.json({
+        error: false,
+        message: 'Imagem do usuário editada com sucesso.'
+      });
+    }).catch(() => {
+      return res.status(400).json({
+        error: false,
+        message: 'Imagem do usuário não editada.'
+      });
+    })
+
+
+});
 
 // Criar a rota Apagar
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/5
