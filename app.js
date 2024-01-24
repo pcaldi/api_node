@@ -5,6 +5,8 @@ const express = require('express');
 const app = express();
 // Importar biblioteca para permitir conexão externa
 const cors = require('cors');
+// O módulo path permite gerenciar diretórios e caminhos
+const path = require('path');
 
 // Criar o middleware para receber os dados  no corpo da requisição;
 app.use(express.json());
@@ -22,6 +24,9 @@ app.use((req, res, next) => {
   // Quando não houver erro deve continuar o processamento
   next();
 });
+
+// Local dos arquivos estáticos
+app.use(express.static(path.join(__dirname, "public")));
 
 
 

@@ -1,6 +1,7 @@
 //Incluir Biblioteca
 //Gerencia as requisições, rotas e URLS, entre outras funcionalidades
 const express = require('express');
+
 //Chamar a função express
 const router = express.Router();
 
@@ -13,8 +14,12 @@ const yup = require('yup');
 //Operador Sequelize
 const { Op } = require('sequelize');
 
+// O módulo fs permite interagir com o sistema de arquivos
+const fs = require('fs');
+
 // Incluir a conexão com o banco de dados
 const db = require("../db/models");
+
 // Arquivo para validar token
 const { eAdmin } = require('../services/authService');
 
@@ -122,6 +127,19 @@ router.get("/users/:id", eAdmin, async (req, res) => {
 
   // Acessa o if se encontrar o registo no banco de dados
   if (user) {
+
+    // Acessa o IF se o usuário possuir imagem
+    if (user.dataValues.image) {
+      //console.log(user.dataValues.image);
+
+      // Criar caminho da imagem
+      user.dataValues['image'] = `${process.env.URL_ADM}/images/users/${user.dataValues.image}`;
+    } else {
+      //console.log("Usuário não possui imagem!")
+      // Criar caminho da imagem
+      user.dataValues['image'] = `${process.env.URL_ADM}/images/users/icon_default.png`;
+    }
+
     // Retornar o objeto como resposta
     return res.json({
       error: false,
@@ -269,12 +287,13 @@ router.put("/users/", eAdmin, async (req, res) => {
 
   // Acessa o IF se encontrar o registo no bando de dados
   if (user) {
+
     // Retorna objeto como resposta
     return res.status(400).json({
       error: true,
       message: 'Error: E-mail já cadastrado!'
     })
-  }
+  };
 
 
   // Editar no banco de dados
@@ -313,6 +332,35 @@ router.put("/users-image/:id", upload.single('image'), async (req, res) => {
       message: 'Erro: Selecione uma imagem válida JPEG ou PNG!'
     });
   }
+
+  // Recuperar registro no bando de dados
+  const user = await db.Users.findOne({
+
+    // Indicar quais colunas recuperar
+    attributes: ['id', 'image'],
+
+    // Acrescentar condição para indicar qual registro deve ser retornado do banco de dados
+    where: { id }
+  });
+
+  // Verificar se o usuário tem a imagem salva no banco de dados
+  //console.log(user);
+  if (user.dataValues.image) {
+    // Criar o caminho da imagem que o usuário tem no banco de dados
+    var imgOld = `./public/images/users/${user.dataValues.image}`;
+
+    // fs.access usado para testar as permissões do arquivo
+    fs.access(imgOld, (error) => {
+
+      // Acessar o IF quando não houver erro
+      if (!error) {
+
+        // Apagar a imagem antiga
+        fs.unlink(imgOld, () => { })
+      }
+    });
+  };
+
   // Editar no banco de dados
   db.Users.update(
     { image: req.file.filename },
