@@ -169,3 +169,5 @@ npx sequelize-cli migration:generate --name alter-users-image
 ```
 npm install --save multer
 ```
+
+
