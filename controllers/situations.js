@@ -9,6 +9,8 @@ const yup = require('yup');
 const db = require("../db/models");
 // Arquivo para validar o token
 const { eAdmin } = require("../services/authService");
+// Arquivo responsável por salvar logs
+const logger = require('../services/loggerService');
 
 
 // Criar a rota Listar, é a rota raiz
@@ -56,6 +58,14 @@ router.get("/situations", eAdmin, async (req, res) => {
 
   // Acessa o if se encontrar o registo no banco de dados
   if (situations) {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Listar Situação.',
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar o objeto como resposta
     return res.json(
       {
@@ -64,6 +74,14 @@ router.get("/situations", eAdmin, async (req, res) => {
       }
     );
   } else {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Listar situação não executada corretamente',
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar o objeto como resposta
     return res.status(400).json(
       {
@@ -94,12 +112,28 @@ router.get("/situations/:id", eAdmin, async (req, res) => {
 
   // Acessa o if se encontrar o registo no banco de dados
   if (situation) {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Visualizar situação',
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar o objeto como resposta
     return res.json({
       error: false,
       situation
     })
   } else {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Visualizar situação não executada corretamente',
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar objeto como resposta
     return res.status(400).json({
       error: true,
@@ -140,6 +174,15 @@ router.post("/situations", eAdmin, async (req, res) => {
   // Salvar no banco de dados
   await db.Situations.create(data)
     .then((dataSituation) => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Situação cadastrada',
+        nameSituation: data.nameSituation,
+        userId: req.userId,
+        date: new Date()
+      });
+
       // Retornar o objeto como resposta
       return res.json(
         {
@@ -149,6 +192,14 @@ router.post("/situations", eAdmin, async (req, res) => {
         }
       );
     }).catch(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Situação não cadastrada',
+        nameSituation: data.nameSituation,
+        userId: req.userId,
+        date: new Date()
+      });
       // Retornar o objeto como resposta
       return res.status(400).json(
         {
@@ -190,6 +241,14 @@ router.put("/situations/", eAdmin, async (req, res) => {
   // Editar o registro no banco de dados
   await db.Situations.update(data, { where: { id: data.id } })
     .then(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Situação editada',
+        userId: req.userId,
+        date: new Date()
+      });
+
       // Retornar o objeto como resposta
       return res.json({
         error: false,
@@ -197,6 +256,14 @@ router.put("/situations/", eAdmin, async (req, res) => {
       })
     })
     .catch(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Situação não editada',
+        userId: req.userId,
+        date: new Date()
+      });
+
       // Retorno o objeto como resposta
       return res.status(400).json({
         error: true,
@@ -219,12 +286,28 @@ router.delete("/situations/:id", eAdmin, async (req, res) => {
     where: { id }
 
   }).then(() => {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Situação apagada.',
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar o objeto como resposta
     return res.json({
       error: false,
       message: 'Apagado com sucesso.'
     });
   }).catch(() => {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Situação não apagada.',
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar o objeto como resposta
     return res.status(400).json({
       error: true,

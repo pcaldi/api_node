@@ -10,9 +10,11 @@ const bcrypt = require('bcrypt');
 // Gerar o token de autenticação
 const JWT = require('jsonwebtoken');
 // Incluir arquivo com variáveis de ambiente
-require('dotenv').config()
+require('dotenv').config();
 //Validar formulários
 const yup = require('yup');
+// Arquivo responsável por salvar logs
+const logger = require('../services/loggerService');
 
 // Criar a rota Login
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/login/
@@ -50,6 +52,14 @@ router.post("/login", async (req, res) => {
 
   // Acessa o IF se (!diferente de true) encontrar o user no banco de dados
   if (!user) {
+
+    // Salvar o log no nível warn
+    logger.warn({
+      message: 'Tentativa de login com email incorreto.',
+      email: data.email,
+      date: new Date()
+    });
+
     // Retorna objeto como resposta
     return res.status(401).json({
       error: true,
@@ -58,10 +68,18 @@ router.post("/login", async (req, res) => {
   }
   // Comparar a senha do usuário com a senha salva no banco de dados
   if (!(await bcrypt.compare(String(data.password), String(user.password)))) {
+
+    // Salvar o log no nível warn
+    logger.warn({
+      message: 'Tentativa de login com senha incorreta.',
+      email: data.email,
+      date: new Date()
+    });
+
     // Retorna objeto como resposta
     return res.status(401).json({
       error: true,
-      message: 'Error: Usuário ou password incorretos!'
+      message: 'Error: Usuário ou senha incorretas!'
     });
   }
   // Gerar o token de autenticação

@@ -1,0 +1,15 @@
+{"email":"paul@email.com","level":"warn","message":"Tentativa de login com email incorreto."}
+{"date":"2024-01-24T13:46:49.533Z","email":"paul@email.com","level":"warn","message":"Tentativa de login com email incorreto."}
+{"date":"2024-01-24T13:51:58.733Z","email":"paulo@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
+{"date":"2024-01-24T14:23:36.722Z","email":"paulo@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
+{"date":"2024-01-24T14:26:02.582Z","level":"info","message":"Listar situação","userId":1}
+{"date":"2024-01-24T15:31:14.515Z","level":"info","message":"Listar Situação.","userId":1}
+{"date":"2024-01-24T15:31:30.015Z","level":"info","message":"Visualizar situação","userId":1}
+{"date":"2024-01-24T15:31:47.653Z","level":"info","message":"Listar Usuário.","userId":1}
+{"date":"2024-01-24T15:31:58.229Z","id":"3","level":"info","message":"Usuário visualizado.","userId":1}
+{"date":"2024-01-24T15:32:07.996Z","email":"paulo@email.com","id":"1","level":"info","message":"Usuário editado com sucesso.","name":"Paulo","situationId":1,"userId":1}
+{"date":"2024-01-24T15:32:35.896Z","image":"1706110355890531363498.png","level":"info","message":"Imagem do usuário editada com sucesso."}
+{"date":"2024-01-24T15:33:31.489Z","image":"170611041148032113960.png","level":"info","message":"Imagem do usuário editada com sucesso."}
+{"date":"2024-01-24T15:35:32.136Z","id":"12","image":"1706110532127280636632.png","level":"info","message":"Imagem do usuário editada com sucesso."}
+{"date":"2024-01-24T15:36:17.910Z","level":"info","message":"Enviado extensão da imagem inválida no editar imagem do usuário."}
+{"date":"2024-01-24T15:37:01.326Z","id":"12","level":"info","message":"Enviado extensão da imagem inválida no editar imagem do usuário."}

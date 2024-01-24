@@ -26,6 +26,9 @@ const { eAdmin } = require('../services/authService');
 // Arquivo com a função de upload
 const upload = require('../services/uploadImgUserService');
 
+// Arquivo responsável por salvar logs
+const logger = require('../services/loggerService');
+
 
 // Criar a rota Listar, é a rota raiz
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users?page=1
@@ -85,12 +88,29 @@ router.get("/users", eAdmin, async (req, res) => {
 
   // Acessa o if se encontrar o registo no banco de dados
   if (users) {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Listar Usuário.',
+      userId: req.userId,
+      date: new Date()
+    });
+
+
     // Retornar o objeto como resposta
     return res.json({
       error: false,
       users
     });
   } else {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Listar Usuário não executada corretamente.',
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar o objeto como resposta
     return res.status(400).json({
       error: true,
@@ -100,7 +120,7 @@ router.get("/users", eAdmin, async (req, res) => {
 
 });
 
-// Criar a rota Usuários
+// Criar a rota Visualizar
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/users/1
 router.get("/users/:id", eAdmin, async (req, res) => {
 
@@ -120,13 +140,20 @@ router.get("/users/:id", eAdmin, async (req, res) => {
       attributes: ['nameSituation']
     }],
 
-
     // Acrescentar condição para indicar qual registro dever ser retornado do banco de dados
     where: { id }
   });
 
   // Acessa o if se encontrar o registo no banco de dados
   if (user) {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Usuário visualizado.',
+      id,
+      userId: req.userId,
+      date: new Date()
+    });
 
     // Acessa o IF se o usuário possuir imagem
     if (user.dataValues.image) {
@@ -146,6 +173,15 @@ router.get("/users/:id", eAdmin, async (req, res) => {
       user
     });
   } else {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Usuário não encontrado.',
+      id,
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar o objeto como resposta
     return res.status(400).json({
       error: true,
@@ -204,6 +240,17 @@ router.post("/users", eAdmin, async (req, res) => {
 
   // Acessa o IF se encontrar o registro no banco de dados
   if (user) {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Tentativa de cadastro com e-mail já cadastrado.',
+      name: data.name,
+      email: data.email,
+      situationId: data.situationId,
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retorno objeto como resposta
     return res.status(400).json({
       error: true,
@@ -216,6 +263,17 @@ router.post("/users", eAdmin, async (req, res) => {
 
   // Salvar os dados no banco de dados
   await db.Users.create(data).then((dataUser) => {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Usuário cadastrado com sucesso.',
+      name: data.name,
+      email: data.email,
+      situationId: data.situationId,
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar o objeto como resposta
     return res.json({
       error: false,
@@ -223,6 +281,17 @@ router.post("/users", eAdmin, async (req, res) => {
       dataUser
     });
   }).catch(() => {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Usuário não cadastrado.',
+      name: data.name,
+      email: data.email,
+      situationId: data.situationId,
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retornar o objeto como resposta
     return res.status(400).json({
       error: true,
@@ -288,6 +357,17 @@ router.put("/users/", eAdmin, async (req, res) => {
   // Acessa o IF se encontrar o registo no bando de dados
   if (user) {
 
+    // Salvar log no nível info
+    logger.info({
+      message: 'Tentativa de utilizar e-mail já cadastrado em outro usuário.',
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      situationId: data.situationId,
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retorna objeto como resposta
     return res.status(400).json({
       error: true,
@@ -299,12 +379,36 @@ router.put("/users/", eAdmin, async (req, res) => {
   // Editar no banco de dados
   await db.Users.update(data, { where: { id: data.id } })
     .then(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Usuário editado com sucesso.',
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        situationId: data.situationId,
+        userId: req.userId,
+        date: new Date()
+      });
+
       // Retorno objeto como resposta
       return res.json({
         error: false,
         message: 'Usuário editado com sucesso.'
       });
     }).catch(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Usuário não editado.',
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        situationId: data.situationId,
+        userId: req.userId,
+        date: new Date()
+      });
+
       // Retorno objeto como resposta
       return res.status(400).json({
         error: true,
@@ -326,6 +430,15 @@ router.put("/users-image/:id", upload.single('image'), async (req, res) => {
   // Acessa o IF quando a extensão da imagem é inválida
   //console.log(req.file)
   if (!req.file) {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Enviado extensão da imagem inválida no editar imagem do usuário.',
+      id,
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retorno objeto como resposta
     return res.status(400).json({
       error: true,
@@ -366,11 +479,33 @@ router.put("/users-image/:id", upload.single('image'), async (req, res) => {
     { image: req.file.filename },
     { where: { id } })
     .then(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Imagem do usuário editada com sucesso.',
+        image: req.file.filename,
+        id,
+        userId: req.userId,
+        date: new Date()
+      });
+
+      // Retornar objeto como resposta
       return res.json({
         error: false,
         message: 'Imagem do usuário editada com sucesso.'
       });
     }).catch(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Imagem do usuário não editada.',
+        image: req.file.filename,
+        id,
+        userId: req.userId,
+        date: new Date()
+      });
+
+      // Retornar objeto como resposta
       return res.status(400).json({
         error: false,
         message: 'Imagem do usuário não editada.'
@@ -394,12 +529,30 @@ router.delete("/users/:id", eAdmin, async (req, res) => {
     where: { id }
 
   }).then(() => {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Usuário apagado com sucesso.',
+      id,
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retorno objeto como resposta
     return res.json({
       error: false,
       message: 'Usuário apagado com sucesso.'
     })
   }).catch(() => {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Usuário não apagado.',
+      id,
+      userId: req.userId,
+      date: new Date()
+    });
+
     // Retorno objeto como resposta
     return res.status(400).json({
       error: true,
