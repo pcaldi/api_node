@@ -175,3 +175,8 @@ npm install --save multer
 ```
 npm install --save winston
 ```
+
+### Criar a migrations alterar a tabela users e acrescentar a coluna recoverPassword
+```
+npx sequelize-cli migration:generate --name alter-users-recover-password
+```
