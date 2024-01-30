@@ -8,3 +8,8 @@
 {"date":"2024-01-30T22:14:24.509Z","level":"info","message":"Listar Usuário.","userId":8}
 {"date":"2024-01-30T22:14:44.987Z","level":"info","message":"Validar chave recuperar senha, chave inválida."}
 {"date":"2024-01-30T22:17:53.892Z","level":"info","message":"Listar Usuário.","userId":8}
+{"date":"2024-01-30T22:19:17.478Z","id":"1","level":"info","message":"Usuário visualizado.","userId":8}
+{"date":"2024-01-30T22:19:20.025Z","level":"info","message":"Listar Usuário.","userId":8}
+{"date":"2024-01-30T22:20:03.116Z","level":"info","message":"Listar Usuário.","userId":8}
+{"date":"2024-01-30T22:35:42.858Z","id":8,"level":"info","message":"Perfil visualizado.","userId":8}
+{"date":"2024-01-30T22:36:41.295Z","id":8,"level":"info","message":"Perfil visualizado.","userId":8}

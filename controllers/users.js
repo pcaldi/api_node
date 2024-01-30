@@ -38,7 +38,7 @@ router.get("/users", eAdmin, async (req, res) => {
   const { page = 1 } = req.query;
 
   // Limite de registro em cada página.
-  const limitPage = 40;
+  const limitPage = 4;
 
   // Recuperar os valores que estavam no token, tratado em authService.js
   // console.log(req.userId)
@@ -100,7 +100,9 @@ router.get("/users", eAdmin, async (req, res) => {
     // Retornar o objeto como resposta
     return res.json({
       error: false,
-      users
+      users,
+      lastPage,
+      countUser
     });
   } else {
 

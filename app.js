@@ -29,14 +29,15 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 
-
 // Incluir as CONTROLLERS
 const users = require('./controllers/users');
+const profile = require('./controllers/profile');
 const situations = require('./controllers/situations');
 const login = require('./controllers/login');
 
 // Criar as rotas
 app.use("/", users);
+app.use("/", profile);
 app.use("/", situations);
 app.use("/", login);
 
