@@ -1,27 +1,2 @@
 {"email":"paul@email.com","level":"warn","message":"Tentativa de login com email incorreto."}
-{"date":"2024-01-24T13:46:49.533Z","email":"paul@email.com","level":"warn","message":"Tentativa de login com email incorreto."}
-{"date":"2024-01-24T13:51:58.733Z","email":"paulo@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
-{"date":"2024-01-24T14:23:36.722Z","email":"paulo@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
-{"date":"2024-01-24T14:26:02.582Z","level":"info","message":"Listar situação","userId":1}
-{"date":"2024-01-24T15:31:14.515Z","level":"info","message":"Listar Situação.","userId":1}
-{"date":"2024-01-24T15:31:30.015Z","level":"info","message":"Visualizar situação","userId":1}
-{"date":"2024-01-24T15:31:47.653Z","level":"info","message":"Listar Usuário.","userId":1}
-{"date":"2024-01-24T15:31:58.229Z","id":"3","level":"info","message":"Usuário visualizado.","userId":1}
-{"date":"2024-01-24T15:32:07.996Z","email":"paulo@email.com","id":"1","level":"info","message":"Usuário editado com sucesso.","name":"Paulo","situationId":1,"userId":1}
-{"date":"2024-01-24T15:32:35.896Z","image":"1706110355890531363498.png","level":"info","message":"Imagem do usuário editada com sucesso."}
-{"date":"2024-01-24T15:33:31.489Z","image":"170611041148032113960.png","level":"info","message":"Imagem do usuário editada com sucesso."}
-{"date":"2024-01-24T15:35:32.136Z","id":"12","image":"1706110532127280636632.png","level":"info","message":"Imagem do usuário editada com sucesso."}
-{"date":"2024-01-24T15:36:17.910Z","level":"info","message":"Enviado extensão da imagem inválida no editar imagem do usuário."}
-{"date":"2024-01-24T15:37:01.326Z","id":"12","level":"info","message":"Enviado extensão da imagem inválida no editar imagem do usuário."}
-{"date":"2024-01-28T13:49:33.382Z","email":"pcaldi@email.com","level":"warn","message":"Tentativa de login com email incorreto."}
-{"date":"2024-01-28T13:51:37.963Z","id":"1","level":"info","message":"Usuário visualizado.","userId":1}
-{"date":"2024-01-28T13:55:23.883Z","level":"info","message":"Listar Situação.","userId":1}
-{"date":"2024-01-28T13:55:28.294Z","level":"info","message":"Visualizar situação","userId":1}
-{"date":"2024-01-28T13:55:41.291Z","level":"info","message":"Listar Situação.","userId":1}
-{"date":"2024-01-28T14:09:09.699Z","email":"paulo@email.com","id":"1","level":"info","message":"Usuário editado com sucesso.","name":"Paulo","situationId":2,"userId":1}
-{"date":"2024-01-28T14:09:50.846Z","level":"info","message":"Listar Situação.","userId":1}
-{"date":"2024-01-28T14:09:54.879Z","level":"info","message":"Situação editada","userId":1}
-{"date":"2024-01-28T23:27:39.181Z","level":"info","message":"Listar Usuário.","userId":1}
-{"date":"2024-01-28T23:52:12.670Z","email":"paulo123@email.com","level":"info","message":"Tentativa de recuperação de senha com e-mail incorreto."}
-{"date":"2024-01-29T20:32:48.253Z","email":"paulo7@email.com","level":"info","message":"Enviado e-mail com instruções para recuperar a senha."}
-{"date":"2024-01-29T20:37:11.561Z","email":"paulo7@email.com","level":"info","message":"Enviado e-mail com instruções para recuperar a senha."}
+
