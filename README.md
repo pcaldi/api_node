@@ -180,3 +180,7 @@ npm install --save winston
 ```
 npx sequelize-cli migration:generate --name alter-users-recover-password
 ```
+### Biblioteca para enviar e-mail
+```
+npm install --save nodemailer
+```

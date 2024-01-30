@@ -23,3 +23,5 @@
 {"date":"2024-01-28T14:09:54.879Z","level":"info","message":"Situação editada","userId":1}
 {"date":"2024-01-28T23:27:39.181Z","level":"info","message":"Listar Usuário.","userId":1}
 {"date":"2024-01-28T23:52:12.670Z","email":"paulo123@email.com","level":"info","message":"Tentativa de recuperação de senha com e-mail incorreto."}
+{"date":"2024-01-29T20:32:48.253Z","email":"paulo7@email.com","level":"info","message":"Enviado e-mail com instruções para recuperar a senha."}
+{"date":"2024-01-29T20:37:11.561Z","email":"paulo7@email.com","level":"info","message":"Enviado e-mail com instruções para recuperar a senha."}
