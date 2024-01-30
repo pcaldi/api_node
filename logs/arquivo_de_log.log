@@ -1,2 +1,10 @@
 {"email":"paul@email.com","level":"warn","message":"Tentativa de login com email incorreto."}
 
+{"date":"2024-01-30T22:10:50.508Z","email":"paulo8@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
+{"date":"2024-01-30T22:11:08.230Z","email":"paulo8@email.com","level":"info","message":"Enviado e-mail com instruções para recuperar a senha."}
+{"date":"2024-01-30T22:11:40.415Z","level":"info","message":"Validar chave recuperar senha, chave inválida."}
+{"date":"2024-01-30T22:11:45.594Z","level":"info","message":"Validar chave recuperar senha, chave válida."}
+{"date":"2024-01-30T22:12:11.748Z","level":"info","message":"Senha editada com sucesso."}
+{"date":"2024-01-30T22:14:24.509Z","level":"info","message":"Listar Usuário.","userId":8}
+{"date":"2024-01-30T22:14:44.987Z","level":"info","message":"Validar chave recuperar senha, chave inválida."}
+{"date":"2024-01-30T22:17:53.892Z","level":"info","message":"Listar Usuário.","userId":8}

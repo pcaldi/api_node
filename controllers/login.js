@@ -160,7 +160,7 @@ router.post("/recover-password", async (req, res) => {
   // Editar o registro no banco de dados
   await db.Users.update(
     { recoverPassword },
-    { where: { id: user.id } }
+    { where: { id: user.id } } // Condição "where" a coluna id deve ter o mesmo valor que estiver vindo do banco de dados
   ).then(() => {
 
     // Criar a variável com as credencias do servidor para enviar o e-mail
@@ -304,9 +304,99 @@ router.post("/validate-recover-password", async (req, res) => {
     });
   }
 
+});
+
+// Criar a rota atualizar senha
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/update-password
+router.post("/update-password", async (req, res) => {
+
+  // Receber os dados enviados no corpo da requisição
+  var data = req.body;
+
+  // Validar os campos utilizando YUP
+  const schema = yup.object().shape({
+    recoverPassword: yup.string('Erro: Necessário enviar a chave!.').required('Erro: Necessário enviar a chave!.'),
+    password: yup.string('Erro: Necessário preencher o campo senha.').required('Erro: Necessário preencher o campo senha.').min(6, 'Erro: A senha deve ter no mínimo 6 caracteres!'),
+  });
+
+  try {
+    await schema.validate(data);
+  } catch (error) {
+    //Retorno objeto como resposta
+    return res.status(401).json({
+      error: true,
+      message: error.errors
+    })
+  }
+  // Recupera o registro no banco de dados
+  const user = await db.Users.findOne({
+
+    // Indicar quais colunas recuperar
+    attributes: ['id', 'email'],
+
+    // Acrescentado condição para indicar qual registro deve ser retornado do banco de dados.
+    where: {
+      recoverPassword: data.recoverPassword
+    }
+
+  });
+
+  // Acessa o IF se encontrar o registro "user" no banco de dados
+  if (user) {
+
+    // Criptografar a senha
+    var password = await bcrypt.hash(data.password, 8);
+
+    // Editar o registro no banco de dados
+
+    await db.Users.update(
+      { recoverPassword: null, password }, // recoverPassword: null - Uma vez utilizada a chave não pode utilizar novamente, sendo assim setamos como null.
+      { where: { id: user.id } } // Condição "where" a coluna id deve ter o mesmo valor que estiver vindo do banco de dados
+    ).then(() => {
+
+      // Salvar o log no nível info
+      logger.info({
+        message: "Senha editada com sucesso.",
+        date: new Date()
+      });
+
+      // Retorna objeto como resposta
+      return res.json({
+        error: false,
+        message: 'Senha editada com sucesso!',
+      });
+    }).catch(() => {
+
+      // Salvar o log no nível info
+      logger.info({
+        message: "Senha não editada.",
+        date: new Date()
+      });
+
+      // Retorna objeto como resposta
+      return res.status(400).json({
+        error: true,
+        message: 'Senha não editada!',
+      });
+    });
 
 
-})
+  } else {
+
+    // Salvar o log no nível info
+    logger.info({
+      message: "Chave recuperar senha inválida.",
+      date: new Date()
+    });
+
+    // Retorna objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: 'Erro: Chave recuperar senha inválida.',
+    });
+  }
+
+});
 
 
 // Exportar a instrução que está dentro da constante router
