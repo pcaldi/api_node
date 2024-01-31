@@ -184,3 +184,7 @@ npx sequelize-cli migration:generate --name alter-users-recover-password
 ```
 npm install --save nodemailer
 ```
+### Criar a migrations alterar a tabela users e acrescentar a coluna recoverPasswordToken
+```
+npx sequelize-cli migration:generate --name alter-users-recover-password-token
+```

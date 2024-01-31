@@ -257,7 +257,7 @@ router.post("/users", eAdmin, async (req, res) => {
     return res.status(400).json({
       error: true,
       message: 'Error: E-mail já cadastrado!'
-    })
+    });
   }
 
   // Criptografar a senha
@@ -374,7 +374,7 @@ router.put("/users/", eAdmin, async (req, res) => {
     return res.status(400).json({
       error: true,
       message: 'Error: E-mail já cadastrado!'
-    })
+    });
   };
 
 
@@ -415,7 +415,7 @@ router.put("/users/", eAdmin, async (req, res) => {
       return res.status(400).json({
         error: true,
         message: 'Error: Usuário não editado.'
-      })
+      });
     })
 
 });
@@ -545,7 +545,7 @@ router.delete("/users/:id", eAdmin, async (req, res) => {
     return res.json({
       error: false,
       message: 'Usuário apagado com sucesso.'
-    })
+    });
   }).catch(() => {
 
     // Salvar log no nível info

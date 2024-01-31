@@ -1,2 +1,4 @@
 {"email":"paul@email.com","level":"warn","message":"Tentativa de login com email incorreto."}
 
+{"date":"2024-01-31T19:28:32.727Z","email":"paulo@email.com","level":"info","message":"Enviado e-mail com instruções para recuperar a senha."}
+{"date":"2024-01-31T19:40:16.932Z","level":"info","message":"Validar token recuperar senha, token válido."}
