@@ -420,6 +420,7 @@ router.put("/users/", eAdmin, async (req, res) => {
 
 });
 
+
 // Criar a rota editar imagem e receber o parâmetro id enviado na URL
 // Endereço para acessar através da aplicação externa http://localhost:8080/user-image/1
 
