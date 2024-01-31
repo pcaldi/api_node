@@ -3,6 +3,8 @@
 const express = require('express');
 // Chamar a função express
 const router = express.Router();
+// Criptografar a senha
+const bcrypt = require('bcrypt');
 // Incluir o arquivo com as variáveis de ambiente
 require('dotenv').config();
 // Validar input do formulário
@@ -214,6 +216,98 @@ router.post('/validate-recover-password-token', async (req, res) => {
       message: "Erro: Token recuperar senha inválido!",
     });
   }
+});
+
+// Criar a rota atualizar senha token
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/update-password-token
+router.put("/update-password-token", async (req, res) => {
+
+  // Receber os dados enviados no corpo da requisição
+  var data = req.body;
+
+  // Validar os campos utilizando YUP
+  const schema = yup.object().shape({
+    recoverPasswordToken: yup.string('Erro: Necessário enviar o token!.').required('Erro: Necessário enviar o token!.'),
+    password: yup.string('Erro: Necessário preencher o campo senha.').required('Erro: Necessário preencher o campo senha.').min(6, 'Erro: A senha deve ter no mínimo 6 caracteres!'),
+  });
+
+  try {
+    await schema.validate(data);
+  } catch (error) {
+    //Retorno objeto como resposta
+    return res.status(401).json({
+      error: true,
+      message: error.errors
+    })
+  }
+  // Recupera o registro no banco de dados
+  const user = await db.Users.findOne({
+
+    // Indicar quais colunas recuperar
+    attributes: ['id', 'email'],
+
+    // Acrescentado condição para indicar qual registro deve ser retornado do banco de dados.
+    where: {
+      recoverPasswordToken: data.recoverPasswordToken
+    }
+
+  });
+
+  // Acessa o IF se encontrar o registro "user" no banco de dados
+  if (user) {
+
+    // Criptografar a senha
+    var password = await bcrypt.hash(data.password, 8);
+
+    // Editar o registro no banco de dados
+
+    await db.Users.update(
+      { recoverPasswordToken: null, password }, // recoverPassword: null - Uma vez utilizada a chave não pode utilizar novamente, sendo assim setamos como null.
+      { where: { id: user.id } } // Condição "where" a coluna id deve ter o mesmo valor que estiver vindo do banco de dados
+    ).then(() => {
+
+      // Salvar o log no nível info
+      logger.info({
+        message: "Senha editada com sucesso.",
+        date: new Date()
+      });
+
+      // Retorna objeto como resposta
+      return res.json({
+        error: false,
+        message: 'Senha editada com sucesso!',
+      });
+    }).catch(() => {
+
+      // Salvar o log no nível info
+      logger.info({
+        message: "Senha não editada.",
+        date: new Date()
+      });
+
+      // Retorna objeto como resposta
+      return res.status(400).json({
+        error: true,
+        message: 'Senha não editada!',
+      });
+    });
+
+
+  } else {
+
+    // Salvar o log no nível info
+    logger.info({
+      message: "Token recuperar senha inválida.",
+      date: new Date()
+    });
+
+    // Retorna objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: 'Erro: Token recuperar senha inválida.',
+    });
+  }
+
 });
 
 // Exportar a instrução que está dentro da constante router

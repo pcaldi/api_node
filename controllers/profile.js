@@ -374,8 +374,5 @@ router.put("/profile-image", eAdmin, upload.single('image'), async (req, res) =>
 
 });
 
-
-
-
 // Exportar a instrução que está dentro da constante router
 module.exports = router;

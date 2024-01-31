@@ -308,7 +308,7 @@ router.post("/validate-recover-password", async (req, res) => {
 
 // Criar a rota atualizar senha
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/update-password
-router.post("/update-password", async (req, res) => {
+router.put("/update-password", async (req, res) => {
 
   // Receber os dados enviados no corpo da requisição
   var data = req.body;

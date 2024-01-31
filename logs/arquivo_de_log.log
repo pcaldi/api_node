@@ -2,3 +2,14 @@
 
 {"date":"2024-01-31T19:28:32.727Z","email":"paulo@email.com","level":"info","message":"Enviado e-mail com instruções para recuperar a senha."}
 {"date":"2024-01-31T19:40:16.932Z","level":"info","message":"Validar token recuperar senha, token válido."}
+{"date":"2024-01-31T19:51:51.168Z","level":"info","message":"Chave recuperar senha inválida."}
+{"date":"2024-01-31T19:54:19.484Z","level":"info","message":"Chave recuperar senha inválida."}
+{"date":"2024-01-31T19:57:58.443Z","email":"paulo@email.com","level":"info","message":"Enviado e-mail com instruções para recuperar a senha."}
+{"date":"2024-01-31T19:58:12.851Z","level":"info","message":"Validar token recuperar senha, token válido."}
+{"date":"2024-01-31T20:00:03.190Z","level":"info","message":"Senha editada com sucesso."}
+{"date":"2024-01-31T20:00:07.831Z","level":"info","message":"Token recuperar senha inválida."}
+{"date":"2024-01-31T20:00:16.890Z","email":"paulo@email.com","level":"info","message":"Enviado e-mail com instruções para recuperar a senha."}
+{"date":"2024-01-31T20:00:34.234Z","level":"info","message":"Validar token recuperar senha, token válido."}
+{"date":"2024-01-31T20:00:39.006Z","level":"info","message":"Senha editada com sucesso."}
+{"date":"2024-01-31T20:01:13.465Z","id":"1","level":"info","message":"Usuário visualizado.","userId":1}
+{"date":"2024-01-31T20:01:22.006Z","level":"info","message":"Listar Usuário.","userId":1}
