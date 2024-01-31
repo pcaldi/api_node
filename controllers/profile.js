@@ -210,6 +210,102 @@ router.put("/profile", eAdmin, async (req, res) => {
 });
 
 
+// Criar a rota editar imagem do profile
+// Endereço para acessar através da aplicação externa http://localhost:8080/profile-image
+
+router.put("/profile-image", eAdmin, upload.single('image'), async (req, res) => {
+
+
+  // Acessa o IF quando a extensão da imagem é inválida
+  //console.log(req.file)
+  if (!req.file) {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Enviado extensão da imagem inválida no editar imagem do usuário.',
+      id: req.userId, //Id do usuário logado.
+      userId: req.userId,
+      date: new Date()
+    });
+
+    // Retorno objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: 'Erro: Selecione uma imagem válida JPEG ou PNG!'
+    });
+  }
+
+  // Recuperar registro no bando de dados
+  const user = await db.Users.findOne({
+
+    // Indicar quais colunas recuperar
+    attributes: ['id', 'image'],
+
+    // Acrescentar condição para indicar qual registro deve ser retornado do banco de dados
+    where: { id: req.userId } // Utilizo o ID do usuário logado.
+  });
+
+  // Verificar se o usuário tem a imagem salva no banco de dados
+  //console.log(user);
+  if (user.dataValues.image) {
+    // Criar o caminho da imagem que o usuário tem no banco de dados
+    var imgOld = `./public/images/users/${user.dataValues.image}`;
+
+    // fs.access usado para testar as permissões do arquivo
+    fs.access(imgOld, (error) => {
+
+      // Acessar o IF quando não houver erro
+      if (!error) {
+
+        // Apagar a imagem antiga
+        fs.unlink(imgOld, () => { })
+      }
+    });
+  };
+
+  // Editar no banco de dados
+  db.Users.update(
+    { image: req.file.filename },
+    { where: { id: req.userId } }) // Utilizo o ID do usuário logado.
+    .then(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Imagem do perfil editada com sucesso.',
+        image: req.file.filename,
+        id: req.userId, // Utilizo o ID do usuário logado.
+        userId: req.userId,
+        date: new Date()
+      });
+
+      // Retornar objeto como resposta
+      return res.json({
+        error: false,
+        message: 'Imagem do perfil editada com sucesso.'
+      });
+    }).catch(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Imagem do perfil não editada.',
+        image: req.file.filename,
+        id: req.userId,// Utilizo o ID do usuário logado.
+        userId: req.userId,
+        date: new Date()
+      });
+
+      // Retornar objeto como resposta
+      return res.status(400).json({
+        error: false,
+        message: 'Imagem do perfil não editada.'
+      });
+    })
+
+
+});
+
+
+
 
 // Exportar a instrução que está dentro da constante router
 module.exports = router;

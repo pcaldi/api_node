@@ -24,3 +24,9 @@
 {"date":"2024-01-31T13:36:13.706Z","level":"info","message":"Chave recuperar senha inválida."}
 {"date":"2024-01-31T13:36:20.231Z","level":"info","message":"Senha editada com sucesso."}
 {"date":"2024-01-31T13:36:23.904Z","id":8,"level":"info","message":"Perfil visualizado.","userId":8}
+{"date":"2024-01-31T13:53:02.313Z","email":"paulo8@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
+{"date":"2024-01-31T13:53:27.471Z","id":8,"level":"info","message":"Perfil visualizado.","userId":8}
+{"date":"2024-01-31T13:53:43.347Z","id":8,"image":"1706709223339806891679.png","level":"info","message":"Imagem do perfil editada com sucesso.","userId":8}
+{"date":"2024-01-31T13:53:50.332Z","id":8,"level":"info","message":"Perfil visualizado.","userId":8}
+{"date":"2024-01-31T13:54:12.403Z","id":8,"image":"1706709252398912690324.jpeg","level":"info","message":"Imagem do perfil editada com sucesso.","userId":8}
+{"date":"2024-01-31T13:54:15.560Z","id":8,"level":"info","message":"Perfil visualizado.","userId":8}

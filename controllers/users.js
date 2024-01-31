@@ -423,7 +423,7 @@ router.put("/users/", eAdmin, async (req, res) => {
 // Criar a rota editar imagem e receber o parâmetro id enviado na URL
 // Endereço para acessar através da aplicação externa http://localhost:8080/user-image/1
 
-router.put("/users-image/:id", upload.single('image'), async (req, res) => {
+router.put("/users-image/:id", eAdmin, upload.single('image'), async (req, res) => {
 
   // Receber o id enviado no URL
   const { id } = req.params;
