@@ -13,3 +13,9 @@
 {"date":"2024-01-31T20:00:39.006Z","level":"info","message":"Senha editada com sucesso."}
 {"date":"2024-01-31T20:01:13.465Z","id":"1","level":"info","message":"Usuário visualizado.","userId":1}
 {"date":"2024-01-31T20:01:22.006Z","level":"info","message":"Listar Usuário.","userId":1}
+{"date":"2024-02-02T12:16:16.189Z","level":"info","message":"Listar Usuário.","userId":1}
+{"date":"2024-02-02T12:16:18.564Z","id":"1","level":"info","message":"Usuário visualizado.","userId":1}
+{"date":"2024-02-02T12:16:33.586Z","id":1,"level":"info","message":"Senha do perfil editada com sucesso.","userId":1}
+{"date":"2024-02-02T12:16:44.723Z","id":1,"level":"info","message":"Senha do usuário editada com sucesso.","userId":1}
+{"date":"2024-02-02T12:41:41.867Z","id":1,"level":"info","message":"Senha do usuário editada com sucesso.","userId":1}
+{"date":"2024-02-02T12:45:02.566Z","id":1,"level":"info","message":"Senha do usuário editada com sucesso.","userId":1}

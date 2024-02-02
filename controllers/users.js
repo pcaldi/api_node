@@ -420,6 +420,77 @@ router.put("/users/", eAdmin, async (req, res) => {
 
 });
 
+// Criar a rota Editar Senha
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/users-password
+// A aplicação externa deve indicar que está enviado os dados em formato de objeto Content-Type: application/json
+// Dados em formato de objeto
+/*
+{
+    "id": "1",
+    "password": "123456"
+}
+*/
+router.put("/users-password", eAdmin, async (req, res) => {
+
+  //Receber os dados enviados no corpo da requisição
+  const data = req.body;
+
+  // Validar os campos utilizando YUP
+  const schema = yup.object().shape({
+    id: yup.string('Erro: Necessário enviar o id do usuário').required('Erro: Necessário enviar o id do usuário'),
+    password: yup.string('Error: Necessário preencher o campo senha.').required('Error: Necessário preencher o campo senha.').min(6, 'A senha deve ter no mínimo 6 caracteres')
+  });
+
+  //Verificar se todos os campos passaram pela validação
+  try {
+    await schema.validate(data);
+  } catch (error) {
+    // Retornar objeto como resposta
+    return res.status(401).json({
+      error: true,
+      message: error.errors
+    });
+  }
+
+  // Criptografar a senha
+  data.password = await bcrypt.hash(String(data.password), 8);
+
+  // Editar no banco de dados
+  await db.Users.update(data, { where: { id: req.userId } }) //Id do usuário logado.
+    .then(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Senha do usuário editada com sucesso.',
+        id: req.userId, //Id do usuário logado.
+        userId: req.userId,
+        date: new Date()
+      });
+
+      // Retorno objeto como resposta
+      return res.json({
+        error: false,
+        message: 'Senha do usuário editada com sucesso.'
+      });
+    }).catch(() => {
+
+      // Salvar log no nível info
+      logger.info({
+        message: 'Senha do usuário não editada.',
+        id: req.userId, //Id do usuário logado.
+        userId: req.userId,
+        date: new Date()
+      });
+
+      // Retorno objeto como resposta
+      return res.status(400).json({
+        error: true,
+        message: 'Error: Senha do usuário não editada.'
+      })
+    })
+
+});
+
 
 // Criar a rota editar imagem e receber o parâmetro id enviado na URL
 // Endereço para acessar através da aplicação externa http://localhost:8080/user-image/1
