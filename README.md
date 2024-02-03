@@ -7,7 +7,7 @@
 
 ### Criar a base de dados "pcaldi" no MySQL
 ### ♻️ Alterar as credenciais do banco de dados no arquivo .env
-### Para a funcionalidade recuperar senha funcionar, é necessário alterar as credencias do servidor de envio de e-mail  no arquivo .env
+### ✉️ Para a funcionalidade recuperar senha funcionar, é necessário alterar as credencias do servidor de envio de e-mail  no arquivo .env
 
 ### Executar as migrations
 ```
