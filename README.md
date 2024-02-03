@@ -50,8 +50,7 @@ node index.js
 nodemon index.js
 ```
 
-### Instalar a dependência de forma global, "-g" significa globalmente. Executar o comando através do prompt de comando, executar somente se nunca instalou a dependência na máquina, após instalar, reinicie o PC.
-
+### Instalar a dependência de forma global, "-g" significa globalmente. 
 ```
 npm install -g nodemon
 ```
