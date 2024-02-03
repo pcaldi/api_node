@@ -6,7 +6,7 @@
 ```
 
 ### Criar a base de dados "pcaldi" no MySQL
-### Alterar as credenciais do banco de dados no arquivo .env
+### ♻️ Alterar as credenciais do banco de dados no arquivo .env
 
 ### Executar as migrations
 ```
