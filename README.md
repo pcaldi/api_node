@@ -145,12 +145,12 @@ npm install --save bcryptjs
 npx sequelize-cli db:migrate:undo --name (NOME-DA-MIGRATIONS)
 ```
 
-### Instalar a dependência JWT
+### Instalar a dependência JWT - JSON Web Token
 ```
 npm install --save jsonwebtoken
 ```
 
-### Validar formulário
+### Biblioteca Yup para validar formulários
 ```
 npm install --save yup
 ```
