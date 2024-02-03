@@ -111,7 +111,7 @@ npx sequelize-cli model:generate --name Situations --attributes nameSituation:st
  npx sequelize-cli model:generate --name Users --attributes name:string,email:string,situationId:integer
 ```
 
-### Executar as migrations
+### Executar as migrations 
 ```
 npx sequelize-cli db:migrate
 ```
@@ -126,7 +126,7 @@ npx sequelize-cli seed:generate --name demo-situations
 npx sequelize-cli seed:generate --name demo-users
 ```
 
-### Executar as seeders
+### Executar as seeders para criar registros fakes no db
 ```
 npx sequelize-cli db:seed:all
 ```
