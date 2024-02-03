@@ -170,7 +170,7 @@ npx sequelize-cli migration:generate --name alter-users-image
 npm install --save multer
 ```
 
-### Biblioteca para salvar log na aplicação
+### Biblioteca Winston para salvar log na aplicação
 ```
 npm install --save winston
 ```
@@ -179,7 +179,7 @@ npm install --save winston
 ```
 npx sequelize-cli migration:generate --name alter-users-recover-password
 ```
-### Biblioteca para enviar e-mail
+### Biblioteca Nodemailer para enviar e-mail
 ```
 npm install --save nodemailer
 ```
