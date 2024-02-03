@@ -85,7 +85,7 @@ npm install --save sequelize
 npm install --save mysql2
 ```
 
-### Sequelize-cli interface de linha de comando usada para criar modelos, configurações e arquivos de migração para banco de dados
+### Sequelize-cli interface  usada para criar modelos, configurações e arquivos de migração para banco de dados
 ```
 npm install --save-dev sequelize-cli
 ```
