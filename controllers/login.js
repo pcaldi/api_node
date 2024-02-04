@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
 
   // Validar os campos utilizando YUP
   const schema = yup.object().shape({
-    password: yup.string().required('Necessário preenchimento do campo senha.').min(6, 'A senha deve ter no mínimo 6 caracteres!'),
+    password: yup.string('Erro: Senha inválida').required('Erro: Necessário preenchimento do campo senha.'),
     email: yup.string().required('Necessário preenchimento do campo e-mail.').email('Informe um e-mail válido.')
   });
 
