@@ -40,3 +40,13 @@
 {"date":"2024-02-03T16:43:18.235Z","email":"paulo@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
 {"date":"2024-02-03T16:44:53.610Z","email":"paulo@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
 {"date":"2024-02-03T16:53:57.904Z","email":"paulo@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
+{"date":"2024-02-04T14:52:50.062Z","email":"paulo38@email.com","level":"info","message":"Usuário cadastrado com sucesso.","name":"Paulo 38"}
+{"date":"2024-02-04T14:54:35.500Z","email":"paulo37@email.com","level":"info","message":"Usuário cadastrado com sucesso.","name":"Paulo 37"}
+{"date":"2024-02-04T15:03:47.539Z","email":"paulo34@email.com","level":"info","message":"Usuário cadastrado com sucesso.","name":"Paulo 34"}
+{"date":"2024-02-04T15:04:13.944Z","email":"paulo35@email.com","level":"info","message":"Usuário cadastrado com sucesso.","name":"Paulo 35"}
+{"date":"2024-02-04T15:07:04.081Z","email":"paulo35@email.com","level":"info","message":"Tentativa de cadastro com e-mail já cadastrado.","name":"Paulo 35"}
+{"date":"2024-02-04T16:15:22.943Z","email":"paulo36@email.com","level":"info","message":"Usuário cadastrado com sucesso.","name":"paulo36"}
+{"date":"2024-02-04T16:16:07.716Z","email":"paulo34@email.com","level":"info","message":"Tentativa de cadastro com e-mail já cadastrado.","name":"paulo34"}
+{"date":"2024-02-04T16:16:20.216Z","email":"paulo36@email.com","level":"info","message":"Tentativa de cadastro com e-mail já cadastrado.","name":"paulo36"}
+{"date":"2024-02-04T16:16:29.146Z","email":"paulo39@email.com","level":"info","message":"Usuário cadastrado com sucesso.","name":"paulo39"}
+{"date":"2024-02-04T16:17:23.702Z","email":"paulo40@email.com","level":"info","message":"Usuário cadastrado com sucesso.","name":"paulo40"}

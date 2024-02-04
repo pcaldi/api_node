@@ -101,6 +101,115 @@ router.post("/login", async (req, res) => {
 
 });
 
+// Criar a rota Cadastro
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/new-users/
+/* A aplicação externa deve indicar que está enviando os dados em formato de objeto:
+{
+  "name": "Paulo",
+  "email": "paulo@email.com",
+  "password": "123456",
+}
+*/
+router.post("/new-users", async (req, res) => {
+  //receber os dados enviados no corpo da requisição
+  var data = req.body;
+
+  // Validar os campos utilizando YUP
+  const schema = yup.object().shape({
+    password: yup.string()
+      .required('Error: Necessário preencher o campo senha!').min(6, 'A senha deve ter no mínimo 6 caracteres'),
+    email: yup.string().required('Error: Necessário preencher o campo e-mail!')
+      .email('Error: Necessário preencher com e-mail válido.!'),
+    name: yup.string().required('Error: Necessário preencher o campo nome!')
+  });
+
+  // Verifico se todos os campos passaram pela validação
+  try {
+    await schema.validate(data);
+  } catch (error) {
+    // Retorno objeto como resposta
+    return res.status(401).json({
+      error: true,
+      message: error.errors
+    });
+  }
+  // Recuperar o registro do banco de dados
+  const user = await db.Users.findOne({
+
+    // Indicar quais colunas recuperar
+    attributes: ['id'],
+
+    // Acrescentando condição para indicar qual registro deve ser retornado do banco de dados
+    where: {
+      email: data.email,
+    }
+  });
+  //console.log(user);
+
+  // Acessa o IF se encontrar o registro no banco de dados
+  if (user) {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Tentativa de cadastro com e-mail já cadastrado.',
+      name: data.name,
+      email: data.email,
+      situationId: data.situationId,
+      userId: req.userId,
+      date: new Date()
+    });
+
+    // Retorno objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: 'Error: E-mail já cadastrado!'
+    });
+  }
+
+  // Criptografar a senha
+  data.password = await bcrypt.hash(String(data.password), 8);
+
+  // Salvar os dados no banco de dados
+  await db.Users.create(data).then((dataUser) => {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Usuário cadastrado com sucesso.',
+      name: data.name,
+      email: data.email,
+      situationId: data.situationId,
+      userId: req.userId,
+      date: new Date()
+    });
+
+    // Retornar o objeto como resposta
+    return res.json({
+      error: false,
+      message: "Usuário cadastrado com sucesso!",
+      dataUser
+    });
+  }).catch(() => {
+
+    // Salvar log no nível info
+    logger.info({
+      message: 'Usuário não cadastrado.',
+      name: data.name,
+      email: data.email,
+      situationId: data.situationId,
+      userId: req.userId,
+      date: new Date()
+    });
+
+    // Retornar o objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: "Error: Usuário não cadastrado.",
+    });
+  });
+
+});
+
+
 // Criar a rota recuperar senha
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/recover-password
 router.post("/recover-password", async (req, res) => {
@@ -397,6 +506,8 @@ router.put("/update-password", async (req, res) => {
   }
 
 });
+
+
 
 
 // Exportar a instrução que está dentro da constante router

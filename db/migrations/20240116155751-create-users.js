@@ -18,7 +18,7 @@ module.exports = {
       },
       situationId: {
         type: Sequelize.INTEGER,
-        defaultValue: 2,
+        defaultValue: 4,
         // Criar o relacionamento da tabela situations com a tabela users no banco de dados
         references: { model: 'Situations', key: 'id' }
       },
