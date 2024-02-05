@@ -22,6 +22,16 @@ const logger = require('../services/loggerService');
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/login/
 router.post("/login", async (req, res) => {
 
+  /* // Chamar a função pausar o processamento por 3 segundos
+  await sleep(3000);
+
+  // Função pausar o processamento por 3 segundos
+  function sleep(ms){
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    })
+  } */
+
   // Receber os dados enviados no corpo da requisição
   var data = req.body;
   //console.log(data);
@@ -111,7 +121,20 @@ router.post("/login", async (req, res) => {
 }
 */
 router.post("/new-users", async (req, res) => {
-  //receber os dados enviados no corpo da requisição
+
+  /*
+    // Chamar a função pausar o processamento por 3 segundos
+    await sleep(3000);
+  
+    // Função pausar o processamento por 3 segundos
+    function sleep(ms) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+      })
+    }
+   */
+
+  // Receber os dados enviados no corpo da requisição
   var data = req.body;
 
   // Validar os campos utilizando YUP
