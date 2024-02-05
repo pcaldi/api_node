@@ -50,3 +50,5 @@
 {"date":"2024-02-04T16:16:20.216Z","email":"paulo36@email.com","level":"info","message":"Tentativa de cadastro com e-mail já cadastrado.","name":"paulo36"}
 {"date":"2024-02-04T16:16:29.146Z","email":"paulo39@email.com","level":"info","message":"Usuário cadastrado com sucesso.","name":"paulo39"}
 {"date":"2024-02-04T16:17:23.702Z","email":"paulo40@email.com","level":"info","message":"Usuário cadastrado com sucesso.","name":"paulo40"}
+{"date":"2024-02-05T00:32:47.325Z","email":"paulo@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
+{"date":"2024-02-05T01:06:53.375Z","email":"paulo7@email.com","level":"warn","message":"Tentativa de login com senha incorreta."}
