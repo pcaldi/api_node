@@ -17,6 +17,8 @@ const yup = require('yup');
 const nodemailer = require('nodemailer');
 // Arquivo responsável por salvar logs
 const logger = require('../services/loggerService');
+// Arquivo para validar token
+const { eAdmin } = require('../services/authService');
 
 // Criar a rota Login
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/login/
@@ -96,7 +98,9 @@ router.post("/login", async (req, res) => {
   }
   // Gerar o token de autenticação
   const token = JWT.sign({ id: user.id, /* name: user.name  */ }, process.env.SECRET_KEY, {
-    expiresIn: 1800 // 30 minutes
+    expiresIn: '60',// 1 minuto
+    //expiresIn: 1800, // 30 minutes
+    //expiresIn: 6000, // 60 minutos
     //expiresIn: '7d'// 7 dias
   });
 
@@ -108,6 +112,55 @@ router.post("/login", async (req, res) => {
       id: user.id, name: user.name, email: user.email, token
     }
   });
+
+});
+
+// Criar a rota validar token
+// Endereço para acessar a api através de aplicação externa: http://localhost:8080/val-token
+router.get("/val-token", eAdmin, async (req, res) => {
+
+  // Recuperar o registro do banco de dados
+  const user = await db.Users.findOne({
+
+    // Indicar quais colunas recuperar
+    attributes: ['id', 'name', 'email'],
+
+    // Acrescentado condição para indicar qual registro deve ser retornado do banco de dados
+    where: { id: req.userId }
+  });
+
+  // Acessa o IF se encontrar o registro no banco de dados
+  if (user) {
+
+    // Gerar token de autenticação
+    const token = JWT.sign({ id: user.id }, process.env.SECRET_KEY, {
+      expiresIn: 60, // 1 minuto
+      //expiresIn: 600, // 10 minutos
+      //expiresIn: 6000, // 60 minutos
+      //expiresIn: '7d', // 7 dias
+    });
+
+    // Salvar o log no nível info
+    logger.info({ message: "Token válido.", userId: req.userId, date: new Date() });
+
+    // Retornar objeto como resposta
+    return res.json({
+      error: false,
+      user: {
+        id: user.id, name: user.name, email: user.email, token: token
+      }
+    });
+  } else {
+
+    // Salvar o log no nível info
+    logger.info({ message: "Token inválido", userId: req.userId, date: new Date() });
+
+    // Retornar objeto como resposta
+    return res.status(400).json({
+      error: true,
+      message: "Erro: Token inválido!"
+    });
+  }
 
 });
 
@@ -125,7 +178,7 @@ router.post("/new-users", async (req, res) => {
   /*
     // Chamar a função pausar o processamento por 3 segundos
     await sleep(3000);
-  
+
     // Função pausar o processamento por 3 segundos
     function sleep(ms) {
       return new Promise((resolve) => {
@@ -370,6 +423,8 @@ router.post("/recover-password", async (req, res) => {
   });
 
 });
+
+
 
 // Criar a rota validar a chave recuperada
 // Endereço para acessar a api através de aplicação externa: http://localhost:8080/validate-recover-password
