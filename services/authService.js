@@ -1,40 +1,48 @@
 // Manipular token de autenticação
 const JWT = require('jsonwebtoken');
-
 // Módulo "util" fornece funções para imprimir strings formatadas
 const { promisify } = require('util');
-
-// Incluir arquivo com variáveis de ambiente
+// Incluir o arquivo com as variáveis de ambiente
 require('dotenv').config();
+// Incluir o arquivo responsável em salvar os logs
+const logger = require('../services/loggerService');
 
-// Exportar para utilizar em outras partes do projeto.
+// Exportar para usar em outras partes do projeto
 module.exports = {
   eAdmin: async function (req, res, next) {
-    //return res.json({ message: 'Validar token' });
+    //return res.json({message: "Validar token."});
 
     // Receber o cabeçalho da requisição
     const authHeader = req.headers.authorization;
-    //console.log(authHeader)
+    //console.log(authHeader);
 
     // Acessa o IF quando não existe dados no cabeçalho
     if (!authHeader) {
-      //Retornar um objeto como resposta
+
+      // Salvar o log no nível info
+      logger.info({ message: "Tentativa de acesso a página restrita sem token.", date: new Date() });
+
+      // Retornar objeto como resposta
       return res.status(401).json({
         error: true,
-        message: 'Erro: ❌ Necessário realizar login para acessar essa página.',
+        message: "Erro: Necessário realizar o login para acessar a página!",
       });
     }
 
-    // Separar a palavra Bearer do token
-    const [bearer, token] = authHeader.split(' ')
+    // Separar o token da palavra bearer
+    const [bearer, token] = authHeader.split(' ');
     //console.log(token);
 
-    // Se o token estiver vazio retornar erro
+    // Se o token estiver vazio retorna erro
     if (!token) {
-      //Retornar objeto como resposta
+
+      // Salvar o log no nível info
+      logger.info({ message: "Tentativa de acesso a página restrita sem token.", date: new Date() });
+
+      // Retornar objeto como resposta
       return res.status(401).json({
         error: true,
-        message: 'Erro: Necessário enviar o token!'
+        message: "Erro: Necessário enviar o token!",
       });
     }
 
@@ -47,16 +55,19 @@ module.exports = {
       // Atribuir como parâmetro o id do usuário que está no token
       req.userId = decode.id;
       //req.userName = decode.name;
-      //console.log(req.userName, req.userId);
 
       return next();
 
-    } catch (error) {
+    } catch (error) { // Acessa o catch quando não conseguir executar
+
+      // Salvar o log no nível info
+      logger.info({ message: "Tentativa de acesso a página restrita com token inválido.", date: new Date() });
+
       // Retornar objeto como resposta
       return res.status(401).json({
         error: true,
-        message: 'Erro: ❌ Necessário realizar login para acessar essa página.'
-      })
+        message: "Erro: Necessário realizar o login para acessar a página!",
+      });
     }
   }
 }
