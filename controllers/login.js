@@ -98,10 +98,10 @@ router.post("/login", async (req, res) => {
   }
   // Gerar o token de autenticação
   const token = JWT.sign({ id: user.id, /* name: user.name  */ }, process.env.SECRET_KEY, {
-    expiresIn: '60',// 1 minuto
+    //expiresIn: '60',// 1 minuto
     //expiresIn: 1800, // 30 minutes
     //expiresIn: 6000, // 60 minutos
-    //expiresIn: '7d'// 7 dias
+    expiresIn: '7d'// 7 dias
   });
 
   // Retorna objeto como resposta
@@ -134,10 +134,10 @@ router.get("/val-token", eAdmin, async (req, res) => {
 
     // Gerar token de autenticação
     const token = JWT.sign({ id: user.id }, process.env.SECRET_KEY, {
-      expiresIn: 60, // 1 minuto
+      //expiresIn: 60, // 1 minuto
       //expiresIn: 600, // 10 minutos
       //expiresIn: 6000, // 60 minutos
-      //expiresIn: '7d', // 7 dias
+      expiresIn: '7d', // 7 dias
     });
 
     // Salvar o log no nível info

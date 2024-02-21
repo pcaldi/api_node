@@ -51,7 +51,7 @@ node index.js
 nodemon index.js
 ```
 
-### Instalar a dependência de forma global, "-g" significa globalmente. 
+### Instalar a dependência de forma global, "-g" significa globalmente.
 ```
 npm install -g nodemon
 ```
@@ -73,7 +73,7 @@ http://localhost:8080
 
 ### Comando SQL para criar a base de dados
 ```
-CREATE DATABASE nodecelke CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE pcaldi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 ### Sequelize é uma biblioteca Javascript que facilita o gerenciamento do banco de dados SQL
@@ -111,7 +111,7 @@ npx sequelize-cli model:generate --name Situations --attributes nameSituation:st
  npx sequelize-cli model:generate --name Users --attributes name:string,email:string,situationId:integer
 ```
 
-### Executar as migrations 
+### Executar as migrations
 ```
 npx sequelize-cli db:migrate
 ```
