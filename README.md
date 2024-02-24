@@ -51,7 +51,7 @@ node index.js
 nodemon index.js
 ```
 
-### Instalar a dependência de forma global, "-g" significa globalmente. 
+### Instalar a dependência de forma global, "-g" significa globalmente.
 ```
 npm install -g nodemon
 ```
@@ -111,7 +111,7 @@ npx sequelize-cli model:generate --name Situations --attributes nameSituation:st
  npx sequelize-cli model:generate --name Users --attributes name:string,email:string,situationId:integer
 ```
 
-### Executar as migrations 
+### Executar as migrations
 ```
 npx sequelize-cli db:migrate
 ```
@@ -188,3 +188,5 @@ npm install --save nodemailer
 ```
 npx sequelize-cli migration:generate --name alter-users-recover-password-token
 ```
+
+
