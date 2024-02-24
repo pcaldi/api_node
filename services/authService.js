@@ -1,5 +1,5 @@
 // Manipular token de autenticação
-const JWT = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 // Módulo "util" fornece funções para imprimir strings formatadas
 const { promisify } = require('util');
 // Incluir o arquivo com as variáveis de ambiente
@@ -49,7 +49,7 @@ module.exports = {
     // Permanece no try se conseguir executar corretamente
     try {
       // Validar o token
-      const decode = await promisify(JWT.verify)(token, process.env.SECRET_KEY);
+      const decode = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
       //console.log(decode);
 
       // Atribuir como parâmetro o id do usuário que está no token
