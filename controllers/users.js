@@ -634,7 +634,7 @@ router.delete("/users/:id", eAdmin, async (req, res) => {
     })
   })
   // Retornar o objeto como resposta
-  return res.json({ id });
+  //return res.json({ id });
 });
 
 
