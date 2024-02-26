@@ -456,13 +456,13 @@ router.put("/users-password", eAdmin, async (req, res) => {
   data.password = await bcrypt.hash(String(data.password), 8);
 
   // Editar no banco de dados
-  await db.Users.update(data, { where: { id: req.userId } }) //Id do usuário logado.
+  await db.Users.update(data, { where: { id: data.id } })
     .then(() => {
 
       // Salvar log no nível info
       logger.info({
         message: 'Senha do usuário editada com sucesso.',
-        id: req.userId, //Id do usuário logado.
+        id: data.id,
         userId: req.userId,
         date: new Date()
       });
