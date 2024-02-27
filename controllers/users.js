@@ -101,8 +101,18 @@ router.get("/users", eAdmin, async (req, res) => {
     return res.json({
       error: false,
       users,
-      lastPage,
-      countUser
+      pagination: {
+        // Página atual
+        page,
+        //URL da página anterior
+        prev_page_url: page - 1 >= 1 ? page - 1 : false,
+        //URL da próxima página
+        next_page_url: Number(page) + Number(1) > lastPage ? false : Number(page) + Number(1),
+        // Ultima página
+        lastPage,
+        // Total de páginas
+        total: countUser,
+      },
     });
   } else {
 
