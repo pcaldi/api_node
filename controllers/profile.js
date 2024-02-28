@@ -1,31 +1,22 @@
 //Incluir Biblioteca
 //Gerencia as requisições, rotas e URLS, entre outras funcionalidades
 const express = require('express');
-
 //Chamar a função express
 const router = express.Router();
-
 // Criptografar a senha
 const bcrypt = require('bcrypt');
-
 // Validar Formulários
 const yup = require('yup');
-
 //Operador Sequelize
 const { Op } = require('sequelize');
-
 // O módulo fs permite interagir com o sistema de arquivos
 const fs = require('fs');
-
 // Incluir a conexão com o banco de dados
 const db = require("../db/models");
-
 // Arquivo para validar token
 const { eAdmin } = require('../services/authService');
-
 // Arquivo com a função de upload
 const upload = require('../services/uploadImgUserService');
-
 // Arquivo responsável por salvar logs
 const logger = require('../services/loggerService');
 

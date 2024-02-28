@@ -35,6 +35,7 @@ const profile = require('./controllers/profile');
 const recoverPasswordToken = require('./controllers/recoverPasswordToken');
 const situations = require('./controllers/situations');
 const login = require('./controllers/login');
+const quantity = require('./controllers/quantity');
 
 // Criar as rotas
 app.use("/", users);
@@ -42,6 +43,7 @@ app.use("/", profile);
 app.use("/", recoverPasswordToken);
 app.use("/", situations);
 app.use("/", login);
+app.use("/", quantity);
 
 // Iniciar o servidor na porta 8080, criar a função utilizando arrow function para retornar a mensagem de sucesso.
 const PORT = 8080;
