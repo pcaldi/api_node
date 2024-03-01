@@ -1,31 +1,22 @@
 //Incluir Biblioteca
 //Gerencia as requisições, rotas e URLS, entre outras funcionalidades
 const express = require('express');
-
 //Chamar a função express
 const router = express.Router();
-
 // Criptografar a senha
 const bcrypt = require('bcrypt');
-
 // Validar Formulários
 const yup = require('yup');
-
 //Operador Sequelize
 const { Op } = require('sequelize');
-
 // O módulo fs permite interagir com o sistema de arquivos
 const fs = require('fs');
-
 // Incluir a conexão com o banco de dados
 const db = require("../db/models");
-
 // Arquivo para validar token
 const { eAdmin } = require('../services/authService');
-
 // Arquivo com a função de upload
 const upload = require('../services/uploadImgUserService');
-
 // Arquivo responsável por salvar logs
 const logger = require('../services/loggerService');
 
@@ -101,8 +92,18 @@ router.get("/users", eAdmin, async (req, res) => {
     return res.json({
       error: false,
       users,
-      lastPage,
-      countUser
+      pagination: {
+        // Página atual
+        page,
+        //URL da página anterior
+        prev_page_url: page - 1 >= 1 ? page - 1 : false,
+        //URL da próxima página
+        next_page_url: Number(page) + Number(1) > lastPage ? false : Number(page) + Number(1),
+        // Ultima página
+        lastPage,
+        // Total de páginas
+        total: countUser,
+      },
     });
   } else {
 
@@ -456,13 +457,13 @@ router.put("/users-password", eAdmin, async (req, res) => {
   data.password = await bcrypt.hash(String(data.password), 8);
 
   // Editar no banco de dados
-  await db.Users.update(data, { where: { id: req.userId } }) //Id do usuário logado.
+  await db.Users.update(data, { where: { id: data.id } })
     .then(() => {
 
       // Salvar log no nível info
       logger.info({
         message: 'Senha do usuário editada com sucesso.',
-        id: req.userId, //Id do usuário logado.
+        id: data.id,
         userId: req.userId,
         date: new Date()
       });
@@ -634,7 +635,7 @@ router.delete("/users/:id", eAdmin, async (req, res) => {
     })
   })
   // Retornar o objeto como resposta
-  return res.json({ id });
+  //return res.json({ id });
 });
 
 

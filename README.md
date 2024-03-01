@@ -188,3 +188,5 @@ npm install --save nodemailer
 ```
 npx sequelize-cli migration:generate --name alter-users-recover-password-token
 ```
+
+
